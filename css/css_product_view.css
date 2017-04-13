@@ -1,0 +1,223 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+img{
+    width: 100%;
+}
+#product_view{
+    padding-top: 20px;
+    width: 100%;
+}
+.content_product{
+    width: 1000px;
+    margin-right: auto;
+    margin-left: auto;
+}
+#title_product >ul{
+    list-style-type: none;
+    display: inline-block;
+
+}
+#title_product >ul>li{
+    display: inline-block;
+    color: #7b7777;
+    font-size: small;
+}
+#title_product >ul>li>a{
+    text-decoration: none;
+}
+
+/*content_product*/
+#content_product{
+    padding-top: 40px;
+    width: 100%;
+    height: auto;
+}
+#left_content_product{
+    float: left;
+    width: 23%;
+    min-height: 700px;
+}
+#right_content_product{
+    float: right;
+    width: 75%;
+    min-height: 700px;
+    background-color: #59b7c2;
+}
+.title_content_product{
+    font-size: 20px;
+    color: #494444;
+    padding-left: 5px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+.menu_bottom{
+    border-bottom: 0px !important;
+}
+#menu_left_product{
+    /*! border-top: 1px solid #f5f7f9; */
+    padding-top: 10px;
+    margin-top: 10px;
+
+}
+#menu_left_product{
+    list-style-type: none;
+}
+#menu_left_product >li{
+    list-style-type: none;
+    border-bottom: 1px solid #f5f7f9;
+
+    padding: 10px 10px 10px 5px;
+}
+#menu_left_product>li>a{
+    text-decoration: none;
+    color: #496184;
+    font-size: small;
+}
+#menu_left_product >li:hover{
+    background-color: #f5f7f9;
+}
+#menu_left_product >li:hover #menu_left_product{
+    border-top: 0px !important;
+}
+#special{
+    margin-top: 20px;
+}
+#content_special{
+    /*! border-top: 1px solid #e0e0e0; */
+    margin-top: 10px;
+    padding-top: 10px;
+}
+.content_special{
+    display: inline-block;
+    width: 100%;
+    border-top: 1px solid #e0e0e0;
+    padding-top: 10px;
+}
+.img_content_special{
+    width: 70px;
+    height: 70px;
+    background-color: #f5f7f9;
+    display: inline-block;
+}
+.no_boder{
+    border: 0px !important;
+}
+.content_special >div>img{
+    margin: 5px;
+    height: calc(100% - 10px);
+    width: calc(100% - 10px);
+}
+.text_content_special{
+    float: right;
+    width: calc(100% - 80px);
+}
+.note{
+    font-size: small;
+    text-align: left;
+    padding-top: 0px;
+    padding-right: 10px;
+    color: #494444;
+}
+.price_special{
+    padding-top: 5px;
+    font-size: small;
+    color: #494444;
+    height: 40px;
+}
+.price_special >span{
+    padding-bottom: 5px;
+    padding-right: 5px;
+}
+.price_old{
+    color: #777777;
+    text-decoration: line-through;
+    font-style: italic;
+}
+.price_sale{
+    color: #2eabd9;
+}
+.note:hover{
+    color: #72c4eb;
+    cursor: pointer;
+}
+.img_content_special:hover{
+    cursor: pointer;
+}
+
+#newsletter{
+    padding-top: 10px;
+}
+#newsletter_text{
+    padding-top: 10px;
+    color: #777777;
+    font-size: small;
+    padding-left: 5px;
+    max-width: 100%;
+}
+#newsletter_input_email{
+    margin-top: 20px;
+    border: 1px solid #cccccc;
+    height: 35px;
+    border-radius: 5px;
+}
+#newsletter_input_email >input{
+    border: 0px;
+    height: 100%;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: calc(100% - 10px);
+}
+#newsletter_button_subscribe{
+    margin-top: 20px;
+    width: 70%;
+    text-align: center;
+    height: 35px;
+    line-height: 35px;
+    background-color: #59b7c2;
+    border-radius: 3px;
+}
+#newsletter_button_subscribe >a{
+    text-decoration: none;
+}
+#newsletter_button_subscribe >a>p{
+    font-weight: bold;
+    color: white;
+}
+#newsletter_button_subscribe:hover{
+    cursor: pointer;
+    background-color: #2ab4c4;
+}
+#banner{
+    margin-top: 30px;
+    border-bottom: 1px solid #e0e0e0;
+    position: relative;
+}
+#banner_title >div{
+    width: 20px;
+    height: 20px;
+    float: right;
+    display: inline-block;
+}
+#banner_title{
+    display: inline-block;
+    border-bottom: 1px solid #e0e0e0;
+    width: 100%;
+}
+#banner_title >p{
+    width: 50% !important;
+    border: 0px !important;
+}
+#banner_items{
+    width: 100%;
+    height: 230px;
+    border: 1px solid #e0e0e0;
+    margin-top: 10px;
+    border-radius: 2px;
+}
+#banner_items >img{
+    margin: 10px;
+    width: calc(100% - 20px);
+    height: calc(100% - 20px);
+}
