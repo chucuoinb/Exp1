@@ -1,19 +1,20 @@
 var speed = 300;
 var srcItemBanner = "../images/item";
-var positionItemMinBanner =0;
-var positionItemMaxBanner=0;
+var positionItemMinBanner = 0;
+var positionItemMaxBanner = 0;
 var numberOfItemBanner = 8;
 var idListItemBanner = "#list_item";
-var positionItemMinProduct =0;
-var positionItemMaxProduct=3;
+var positionItemMinProduct = 0;
+var positionItemMaxProduct = 5;
 var numberOfItemProduct = 8;
 var idListItemProduct = "#list_item_right";
 var numberDisplayItemProduct = 4;
 var numberDisplayItemBanner = 1;
 var idItemBanner = "#img";
 var idItemProduct = "#list_item_right_img";
-var click =false;
+var click = false;
 var timeOutMove;
+var positionLagre;
 $(function () {
     $("input").focusin(function () {
         $(this).val("");
@@ -119,10 +120,10 @@ $(function () {
             timeOutMove = setTimeout(function () {
                 click = false;
             }, speed);
-        if (positionItemMinBanner == 0)
-            positionItemMinBanner = numberOfItemBanner - 1;
-        else positionItemMinBanner --;
-        nextItem(positionItemMinBanner,$(".banner_items"),srcItemBanner,1,idItemBanner,idListItemBanner);
+            if (positionItemMinBanner == 0)
+                positionItemMinBanner = numberOfItemBanner - 1;
+            else positionItemMinBanner--;
+            nextItem(positionItemMinBanner, $(".banner_items"), srcItemBanner, 1, idItemBanner, idListItemBanner);
         }
     })
 
@@ -136,7 +137,7 @@ $(function () {
             if (positionItemMaxBanner == numberOfItemBanner - 1)
                 positionItemMaxBanner = 0;
             else positionItemMaxBanner++;
-            preItem(positionItemMaxBanner, $(".banner_items"), srcItemBanner, 1,idItemBanner,idListItemBanner);
+            preItem(positionItemMaxBanner, $(".banner_items"), srcItemBanner, 1, idItemBanner, idListItemBanner);
 
         }
     })
@@ -148,19 +149,27 @@ $(function () {
             timeOutMove = setTimeout(function () {
                 click = false;
             }, speed);
-            var positionLagre = positionItemMinProduct;
-            if (positionItemMinProduct == 0){
+            positionLagre = positionItemMinProduct;
+            if (positionItemMinProduct == 0) {
                 positionItemMinProduct = numberOfItemProduct - 1;
             }
 
             else {
-                positionItemMinProduct --;
+                positionItemMinProduct--;
             }
-            if (positionItemMaxBanner == 0)
-                positionItemMaxProduct=numberOfItemProduct-1;
-            else positionItemMaxProduct --;
-            nextItem(positionItemMinProduct,$(".list_item_right"),srcItemBanner,numberDisplayItemProduct,idItemProduct,idListItemProduct);
-            changeLargeItem(positionLagre)
+            if (positionItemMaxProduct == 0)
+                positionItemMaxProduct = numberOfItemProduct - 1;
+            else
+                positionItemMaxProduct--;
+            // if (positionItemMinProduct == numberOfItemProduct -1){
+            //
+            //     positionLagre = 0;
+            // }
+            // else
+            //     positionLagre = positionItemMinProduct +1;
+            nextItem(positionItemMinProduct, $(".list_item_right"), srcItemBanner, numberDisplayItemProduct, idItemProduct, idListItemProduct);
+            changeLargeItem(positionLagre);
+
         }
     })
 
@@ -171,24 +180,31 @@ $(function () {
             timeOutMove = setTimeout(function () {
                 click = false;
             }, speed);
-            var positionLagre = positionItemMinProduct;
-            if (positionItemMaxProduct == numberOfItemProduct-1){
+            if (positionItemMaxProduct == numberOfItemProduct - 1) {
                 positionItemMaxProduct = 0;
             }
 
             else {
-                positionItemMaxProduct ++;
+                positionItemMaxProduct++;
             }
-            if (positionItemMinProduct == numberOfItemProduct-1)
-                positionItemMinProduct=0;
-            else positionItemMinProduct++;
-            preItem(positionItemMaxProduct,$(".list_item_right"),srcItemBanner,numberDisplayItemProduct,idItemProduct,idListItemProduct);
-            changeLargeItem(positionLagre)
+            if (positionItemMinProduct == numberOfItemProduct - 1)
+                positionItemMinProduct = 0;
+            else
+                positionItemMinProduct++;
+
+            if (positionItemMaxProduct >= numberDisplayItemProduct)
+                positionLagre = positionItemMaxProduct - numberDisplayItemProduct;
+            else
+                positionLagre = positionItemMaxProduct - numberDisplayItemProduct + numberOfItemProduct;
+            preItem(positionItemMaxProduct, $(".list_item_right"), srcItemBanner, numberDisplayItemProduct, idItemProduct, idListItemProduct);
+            changeLargeItem(positionLagre);
         }
     })
 
     $(".list_item_right").click(function () {
-        $("#item_large >img").attr("src",$(idItemProduct+$(".list_item_right").index(this)).attr("src"));
+        $("#item_large >img").attr("src", $(idItemProduct + $(".list_item_right").index(this)).attr("src"));
+        $(".list_item_right").removeClass("display");
+        $(".list_item_right").eq($(".list_item_right").index(this)).addClass("display");
     });
 });
 var checksum = 0;
@@ -234,46 +250,64 @@ function validateEmail($email) {
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     return emailReg.test($email);
 }
-function nextItem(position,listItem,srcItem,maxItemDisplay,id,idList) {
+function nextItem(position, listItem, srcItem, maxItemDisplay, id, idList) {
     var widthItem = parseFloat(listItem.eq(0).css("width"));
     var widthContainer = parseFloat($(idList).css("width"));
     var paddingItem;
-    if(maxItemDisplay == 1)
-        paddingItem =widthContainer-widthItem;
+    if (maxItemDisplay == 1)
+        paddingItem = widthContainer - widthItem;
     else paddingItem = ((widthContainer) - widthItem * maxItemDisplay) / (maxItemDisplay - 1);
 
     listItem.each(function (index, object) {
         var item = $(object);
-        item.animate({left: "+=" + getLeftItem(1,paddingItem,widthItem)}, speed, function () {
-            if (parseInt(item.css("left")) > getLeftItem(maxItemDisplay,paddingItem,widthItem)) {
-                item.css("left", getLeftItem(-1,paddingItem,widthItem));
+        item.animate({left: "+=" + getLeftItem(1, paddingItem, widthItem)}, speed, function () {
+            if (parseInt(item.css("left")) > getLeftItem(maxItemDisplay, paddingItem, widthItem)) {
+                item.css("left", getLeftItem(-1, paddingItem, widthItem));
                 $(id + index).attr("src", srcItem + position + ".png");
             }
+            if (id = idItemProduct)
+                changeBorder();
         })
     });
 }
-function preItem(position,listItem,srcItem,maxItemDisplay,id,idList) {
+function preItem(position, listItem, srcItem, maxItemDisplay, id, idList) {
 
     var widthItem = parseFloat(listItem.eq(0).css("width"));
     var widthContainer = parseFloat($(idList).css("width"));
     var paddingItem;
-    if(maxItemDisplay == 1)
-        paddingItem =widthContainer-widthItem;
+    if (maxItemDisplay == 1)
+        paddingItem = widthContainer - widthItem;
     else paddingItem = ((widthContainer) - widthItem * maxItemDisplay) / (maxItemDisplay - 1);
 
     listItem.each(function (index, object) {
         var item = $(object);
-        item.animate({left: "-=" + getLeftItem(1,paddingItem,widthItem)}, speed, function () {
-            if (parseInt(item.css("left")) < getLeftItem(-1,paddingItem,widthItem)) {
-                item.css("left", getLeftItem(maxItemDisplay,paddingItem,widthItem));
+        item.animate({left: "-=" + getLeftItem(1, paddingItem, widthItem)}, speed, function () {
+            if (parseInt(item.css("left")) < getLeftItem(-1, paddingItem, widthItem)) {
+                item.css("left", getLeftItem(maxItemDisplay, paddingItem, widthItem));
                 $(id + index).attr("src", srcItem + position + ".png");
             }
+            if (id = idItemProduct)
+                changeBorder();
         })
     });
 }
-function getLeftItem(position,paddingItem,widthItem) {
+function getLeftItem(position, paddingItem, widthItem) {
     return position * (widthItem + paddingItem);
 }
 function changeLargeItem(position) {
-    $("#item_large>img").attr("src",srcItemBanner+position+".png");
+
+    $("#item_large>img").attr("src", srcItemBanner + position + ".png");
+}
+function changeBorder() {
+    var list = $(".list_item_right");
+
+    list.each(function (index,object) {
+        var item = $(object);
+        var left = parseInt(item.css("left"));
+        if (left == 0)
+            item.addClass("display");
+        else
+            item.removeClass("display");
+
+    })
 }

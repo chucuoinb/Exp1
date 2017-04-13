@@ -113,7 +113,7 @@
                                     <img id="list_item_right_img0" src="../images/item0.png" alt="">
                                 </div>
                             </div>
-                            <div  class="list_item_right" id="list_item_right_item1">
+                            <div  class="list_item_right display" id="list_item_right_item1">
                                 <div>
 
                                     <img id="list_item_right_img1" src="../images/item1.png" alt="">

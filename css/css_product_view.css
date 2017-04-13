@@ -300,7 +300,7 @@
     height: 85px;
     border-bottom: 1px solid #e0e0e0;
     position: relative;
-    /*overflow-x: hidden;*/
+    overflow-x: hidden;
 }
 #list_item_right >div{
     position: absolute;
@@ -310,6 +310,12 @@
     border: 1px solid #e0e0e0;
     box-sizing: border-box;
     text-align: center;
+}
+.display{
+    border: 1px solid #2eabd9 !important;
+}
+.no_display{
+    border: 1px solid #e0e0e0 !important;
 }
 #list_item_right >div:hover{
     cursor: pointer;
