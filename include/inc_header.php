@@ -70,7 +70,7 @@
                                     <div class="itemincard">
                                         <div class="de">
                                             <div class="igItem">
-                                                <a href="#As"><img src="../images/SPP1.png"></a>
+                                                <a href="#As"><img src="../images/SPP0.png"></a>
                                             </div>
                                             <div class="detail">
                                                 <a href="#12"><p>Caldrea Linen and Room Spray</p></a>
@@ -88,7 +88,7 @@
                                     <div class="itemincard">
                                         <div class="de">
                                             <div class="igItem">
-                                                <a href="#As"><img src="../images/SPP1.png"></a>
+                                                <a href="#As"><img src="../images/SPP0.png"></a>
                                             </div>
                                             <div class="detail">
                                                 <a href="#12"><p>Caldrea Linen and Room Spray</p></a>

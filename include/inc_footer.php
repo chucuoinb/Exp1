@@ -1,83 +1,83 @@
-    <div class="contentFooter" style="color: #777777">
-        <div class="textFooter">
-            <div class="cnt1">
-                <div class="sec">
-                    <h2>
-                        About Us
-                    </h2>
-                    <p>
-                        A block of text is a stack of line boxes, In the case of'left, right and center, this
-                        property
-                        specifies how the inline-level boxes within each ilne box align with respect to the line
-                        box's.
-                    </p>
-                    <p>
-                        Alignment is not with respect to the viewport, In the case of justity this property specif
-                        es
-                        the
-                        inline- level boxes are to be made flush with both sides of the line box if possible.
-                    </p>
-                    <p>
-                        by expanding or contract ng the contents ofinline boxes, else aligned as for the initial
-                        value.
-                    </p>
-                </div>
-            </div>
-            <div class="cnt2">
-                <div class="sec">
-                    <h2>
-                        News
-                    </h2>
-                    <p>
-                        <span style="display: block; font-style: italic">3 january 2012</span><a class="news"
-                                                                                                 href="new1">A
-                        block of text is a stack of line boxes, In the case of "left, right and center, this
-                        property
-                        specifies</a>
-                    </p>
-                    <p>
-                        <span style="display: block; font-style: italic">2 january 2012</span><a class="news"
-                                                                                                 href="new1">A
-                        block of text is of line boxes In the case of left, right and center ?is property specifies
-                        1
-                        january</a>
-                    </p>
-                    <p>
-                        <span style="display: block; font-style: italic">1 january 2012</span><a class="news"
-                                                                                                 href="new1">A
-                        block of text is a stack of line boxes. In the case of lent right and center, this property
-                        speci es
-                        how the nine- evel bo es within</a>
-                    </p>
-                </div>
-            </div>
-            <div class="cnt3">
-                <div class="sec">
-                    <h2>
-                        Newsletter
-                    </h2>
-                    <p>
-                        cursus in dapibus ultrices velit fusce, Felis lacus erat. Fermentum parturient lacus
-                        tristique
-                        habitant
-                        nullam morbi et odio nibh muss dictum tellus erat.
-                    </p>
-                    <div style="height: 50px">
-                        <div class="email">
-                            <input type="text" id="2" name="search"
-                                   placeholder="Enter your email address"/>
-                            <img id="submitEmail" src="../images/Submit.png" style="cursor: pointer;"/>
-                        </div>
-                    </div>
-
-                    <div class="email1">
-                        <img src="../images/mail.png"/>
-                        <p>vel lobortis gravida. Cursus in dapibus ultrices velit fusce. Felts lacus erat</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+<!--    <div class="contentFooter" style="color: #777777">-->
+<!--        <div class="textFooter">-->
+<!--            <div class="cnt1">-->
+<!--                <div class="sec">-->
+<!--                    <h2>-->
+<!--                        About Us-->
+<!--                    </h2>-->
+<!--                    <p>-->
+<!--                        A block of text is a stack of line boxes, In the case of'left, right and center, this-->
+<!--                        property-->
+<!--                        specifies how the inline-level boxes within each ilne box align with respect to the line-->
+<!--                        box's.-->
+<!--                    </p>-->
+<!--                    <p>-->
+<!--                        Alignment is not with respect to the viewport, In the case of justity this property specif-->
+<!--                        es-->
+<!--                        the-->
+<!--                        inline- level boxes are to be made flush with both sides of the line box if possible.-->
+<!--                    </p>-->
+<!--                    <p>-->
+<!--                        by expanding or contract ng the contents ofinline boxes, else aligned as for the initial-->
+<!--                        value.-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="cnt2">-->
+<!--                <div class="sec">-->
+<!--                    <h2>-->
+<!--                        News-->
+<!--                    </h2>-->
+<!--                    <p>-->
+<!--                        <span style="display: block; font-style: italic">3 january 2012</span><a class="news"-->
+<!--                                                                                                 href="new1">A-->
+<!--                        block of text is a stack of line boxes, In the case of "left, right and center, this-->
+<!--                        property-->
+<!--                        specifies</a>-->
+<!--                    </p>-->
+<!--                    <p>-->
+<!--                        <span style="display: block; font-style: italic">2 january 2012</span><a class="news"-->
+<!--                                                                                                 href="new1">A-->
+<!--                        block of text is of line boxes In the case of left, right and center ?is property specifies-->
+<!--                        1-->
+<!--                        january</a>-->
+<!--                    </p>-->
+<!--                    <p>-->
+<!--                        <span style="display: block; font-style: italic">1 january 2012</span><a class="news"-->
+<!--                                                                                                 href="new1">A-->
+<!--                        block of text is a stack of line boxes. In the case of lent right and center, this property-->
+<!--                        speci es-->
+<!--                        how the nine- evel bo es within</a>-->
+<!--                    </p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="cnt3">-->
+<!--                <div class="sec">-->
+<!--                    <h2>-->
+<!--                        Newsletter-->
+<!--                    </h2>-->
+<!--                    <p>-->
+<!--                        cursus in dapibus ultrices velit fusce, Felis lacus erat. Fermentum parturient lacus-->
+<!--                        tristique-->
+<!--                        habitant-->
+<!--                        nullam morbi et odio nibh muss dictum tellus erat.-->
+<!--                    </p>-->
+<!--                    <div style="height: 50px">-->
+<!--                        <div class="email">-->
+<!--                            <input type="text" id="2" name="search"-->
+<!--                                   placeholder="Enter your email address"/>-->
+<!--                            <img id="submitEmail" src="../images/Submit.png" style="cursor: pointer;"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!---->
+<!--                    <div class="email1">-->
+<!--                        <img src="../images/mail.png"/>-->
+<!--                        <p>vel lobortis gravida. Cursus in dapibus ultrices velit fusce. Felts lacus erat</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
     <hr/>
     <div class="footer" style="color: #777777">
 
