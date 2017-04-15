@@ -182,6 +182,7 @@ hr._hr1 {
     transition: opacity linear 0.2s;
     background-color: #f5f7fe;
     border: 1px solid #CCCCCC;
+    max-height: 400px !important;
 
 }
 
@@ -267,6 +268,10 @@ hr._hr1 {
     border: 1px solid #78c4cd;
     background-color: #fafafa;
 
+}
+.igItem >a>img{
+    width: 50% !important;
+    height: auto !important;
 }
 .de
 {
@@ -1479,4 +1484,129 @@ article {
     margin: 0;
     padding: 0;
     overflow: hidden;
+}
+
+#tab2_top{
+    margin-top: 50px !important;
+    width: 100%;
+    height: 100px;
+
+}
+.tab2_top{
+    width: 45%;
+}
+.tab2_top>input{
+    width: 100%;
+    height: 35px;
+    border: 1px solid #e0e0e0;
+    padding-left: 5px;
+}
+.tab2_top>input:focus{
+    border-color: #2eabd9;
+}
+#nickname{
+    float: left;
+
+}
+#summary{
+    float: right;
+}
+/*.tab2_top input{*/
+    /*width: 100%;*/
+    /*border: 1px solid #e0e0e0;*/
+/*}*/
+.tab2_p{
+    color: #707070;
+}
+.tab2_p>span{
+    color: #d07277;
+}
+#tab2_bottom{
+    margin-top: 20px;
+}
+#tab2_bottom >div{
+    border: 1px solid #e0e0e0;
+    width: 100%;
+    min-height: 100px;
+}
+#tab2_bottom >textarea{
+    padding: 10px;
+    width: calc(100%);
+    min-height: 100px;
+    border: 1px solid #e0e0e0;
+    font-size: large;
+}
+#tab2_bottom >textarea:focus{
+    border: 1px solid #2eabd9;
+}
+#note_review{
+    color: #707070;
+    font-style: italic;
+}
+#submit_form{
+    margin-top: 20px;
+    text-align: center;
+    background-color: #59b7c2;
+    border: 0px;
+    min-width: 172px;
+    min-height: 35px;
+    border-radius: 3px;
+    color: white;
+    font-weight: bold;
+}
+#submit_form:hover{
+    background-color: #2ab4c4;
+    cursor: pointer;
+}
+
+#right_product_end{
+    margin-top: 20px;
+    width: 100%;
+
+}
+#list_item_product_title{
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+    height: 30px;
+}
+#list_item_product_title>p{
+    width: 20%;
+    float: left;
+    color: #444;
+    font-size: 20px;
+}
+#list_item_product_title >div{
+    display: inline-block;
+    width: 20%;
+    text-align: right;
+    float: right;
+}
+#list_item_product_title >div>div{
+    display: inline-block;
+    background-color: #f3f4f6;
+    width: 35px;
+    height: 35px;
+    text-align: center;
+    line-height: 35px;
+}
+#list_item_product_title >div>div:hover{
+    background-color: #2eabd9;
+    cursor: pointer;
+}
+#list_item_product{
+    width: 100%;
+    position: relative;
+    overflow-x: hidden;
+    height: 362px;
+    box-sizing: border-box;
+    margin-top: 20px;
+}
+.list_item_product{
+    position: absolute;
+    top: 0px;
+    width: 30%;
+
+}
+#itt1{
+    left: 0px;
 }

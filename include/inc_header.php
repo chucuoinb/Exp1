@@ -64,43 +64,43 @@
                             <img src="../images/gio.png">Cart $0.00</img>
                         </div>
                         <ul class="sub-menu1" id="sub_menu1">
-                            <li><p>Recently added item(s)</p></li>
-                            <li>
-                                <a href="#asda">
-                                    <div class="itemincard">
-                                        <div class="de">
-                                            <div class="igItem">
-                                                <a href="#As"><img src="../images/SPP0.png"></a>
-                                            </div>
-                                            <div class="detail">
-                                                <a href="#12"><p>Caldrea Linen and Room Spray</p></a>
-                                                <a href="#12"><p>1 x $399.00</p></a>
-                                            </div>
-                                            <div class="cancel">
-                                                <p title="delete">X</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#assd">
-                                    <div class="itemincard">
-                                        <div class="de">
-                                            <div class="igItem">
-                                                <a href="#As"><img src="../images/SPP0.png"></a>
-                                            </div>
-                                            <div class="detail">
-                                                <a href="#12"><p>Caldrea Linen and Room Spray</p></a>
-                                                <a href="#12"><p>1 x $399.00</p></a>
-                                            </div>
-                                            <div class="cancel">
-                                                <p title="delete">X</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
+                            <li id="add_item"><p>Recently added item(s)</p></li>
+<!--                            <li class="cart">-->
+<!--                                <a href="#asda">-->
+<!--                                    <div class="itemincard">-->
+<!--                                        <div class="de">-->
+<!--                                            <div class="igItem">-->
+<!--                                                <a href="#As"><img src="../images/SPP0.png"></a>-->
+<!--                                            </div>-->
+<!--                                            <div class="detail">-->
+<!--                                                <a href="#12"><p>Caldrea Linen and Room Spray</p></a>-->
+<!--                                                <a href="#12"><p>1 x $399.00</p></a>-->
+<!--                                            </div>-->
+<!--                                            <div class="cancel">-->
+<!--                                                <p title="delete" class="bt_delete_item">X</p>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                            </li>-->
+<!--                            <li class="cart">-->
+<!--                                <a href="#assd">-->
+<!--                                    <div class="itemincard">-->
+<!--                                        <div class="de">-->
+<!--                                            <div class="igItem">-->
+<!--                                                <a href="#As"><img src="../images/SPP0.png"></a>-->
+<!--                                            </div>-->
+<!--                                            <div class="detail">-->
+<!--                                                <a href="#12"><p>Caldrea Linen and Room Spray</p></a>-->
+<!--                                                <a href="#12"><p>1 x $399.00</p></a>-->
+<!--                                            </div>-->
+<!--                                            <div class="cancel">-->
+<!--                                                <p title="delete">X</p>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                            </li>-->
                             <li>
                                 <div class="checkout">
                                     <div class ="view">

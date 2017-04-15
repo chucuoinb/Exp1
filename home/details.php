@@ -13,9 +13,9 @@
 <body>
 <div class="wrapper">
     <?php
-    include ("../include/inc_header.php");
-    include ("../include/inc_product_view.php");
-    include ("../include/inc_footer.php");
+    include("../include/inc_header.php");
+    include("../include/inc_product_view.php");
+    include("../include/inc_footer.php");
     ?>
 </div>
 </body>

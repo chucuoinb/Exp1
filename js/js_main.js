@@ -15,11 +15,20 @@ var idItemProduct = "#list_item_right_img";
 var click = false;
 var timeOutMove;
 var positionLagre;
+var positionVote = -1;
+var srcItemCart;
+var numberOfItemCart;
+var listItem = new Array();
+var price;
+var checkExistItem = false;
 $(function () {
-    $("input").focusin(function () {
-        $(this).val("");
-        $(this).css("color", "#444444")
-    });
+    // $("input").focusin(function () {
+    //     $(this).val("");
+    //     $(this).css("color", "#444444")
+    // });
+    $("#review_text").focusin(function () {
+        this.css("border","0px solid #2eabd9")
+    })
     $("#1").focusout(function () {
         if ($.trim($(this).val()).length == 0) {
             $(this).val("Search entrie store here...");
@@ -206,6 +215,68 @@ $(function () {
         $(".list_item_right").removeClass("display");
         $(".list_item_right").eq($(".list_item_right").index(this)).addClass("display");
     });
+
+    //vote
+    $(".bt_vote").click(function () {
+        var index = $(".bt_vote").index(this);
+        if (index == positionVote) {
+            deleteVote();
+            positionVote = -1;
+        } else {
+
+            positionVote = index;
+            changeVote(index);
+        }
+    });
+
+    //tab
+    $(".tab").click(function () {
+        var index = $(".tab").index(this);
+        $(".tab").removeClass("tab_choose");
+        $(".tab").eq(index).addClass("tab_choose");
+        displayTab(index);
+    });
+
+    // /add cart
+    $("#bt_add_cart").click(function () {
+        srcItemCart = $("#img_item_large").attr("src");
+        numberOfItemCart = parseInt($("#number_of_item").val());
+        if (listItem.length > 0) {
+            for(var i =0;i<listItem.length;i++){
+                if(listItem[i].getSrc() == srcItemCart){
+                    listItem[i].addValues(numberOfItemCart);
+                    checkExistItem = true;
+                }
+            }
+            if (checkExistItem == false) {
+                var item = new Item();
+                item.setInfo(srcItemCart,344,numberOfItemCart)
+                listItem.push(item);
+
+            }
+            checkExistItem =false;
+        } else {
+            var item = new Item();
+            item.setInfo(srcItemCart,355.00,numberOfItemCart);
+            listItem.push(item);
+
+        }
+    });
+    
+    //delete
+    $(document).on("click",".cancel",function () {
+        var index = $(".cancel").index(this);
+        $(".cart").eq(index).remove();
+        alert($(".igItem >a>img").eq(index).attr("src"));
+    })
+    $("#menu_card").hover(function () {
+
+        loadCart();
+        $("#sub_menu1").css("display","block");
+    },function () {
+        $("#sub_menu1").css("display","none");
+        $(".cart").remove();
+    });
 });
 var checksum = 0;
 function slideItem(bt, Group, param) {
@@ -301,7 +372,7 @@ function changeLargeItem(position) {
 function changeBorder() {
     var list = $(".list_item_right");
 
-    list.each(function (index,object) {
+    list.each(function (index, object) {
         var item = $(object);
         var left = parseInt(item.css("left"));
         if (left == 0)
@@ -310,4 +381,89 @@ function changeBorder() {
             item.removeClass("display");
 
     })
+}
+function changeVote(position) {
+    $(".bt_vote").each(function (index, object) {
+        var vote = $(object)
+        if (index <= position) {
+            if (!vote.hasClass("vote")) {
+                vote.addClass("vote");
+            }
+        }
+        else if (vote.hasClass("vote")) {
+            vote.removeClass("vote");
+        }
+    });
+}
+function deleteVote(position) {
+    $(".bt_vote").removeClass("vote");
+}
+function displayTab(index) {
+    $(".content_tab").removeClass("tab_display");
+    $(".content_tab").eq(index).addClass("tab_display");
+}
+function addItem(src, price,value) {
+    var strCart = "<li class='cart'>" +
+        "<a href='#asda'>" +
+        "<div class='itemincard'>" +
+        "<div class='de'>" +
+        "<div class='igItem'>" +
+        "<a href='#As'><img class='img_cart' src='" +
+        src +
+        "'></a>" +
+        "</div>" +
+        "<div class='detail'>" +
+        "<a href='#12'><p>Caldrea Linen and Room Spray</p></a>" +
+        "<a href='#12'><p>" +
+        value +
+        "x " +
+        price +
+        "</p></a>" +
+        "</div>" +
+        "<div class='cancel'>" +
+        "<p title='delete' class='bt_delete_item'>X</p>" +
+        "</div>" +
+        "</div>" +
+        "</div>" +
+        "</a>" +
+        "</li>";
+    return strCart;
+}
+
+function Item() {
+    this.src = "";
+    this.price = "";
+    this.values = 0;
+
+    this.setInfo = function (src, price, values) {
+        this.src = src;
+        this.price = price;
+        this.values = values;
+    };
+
+    this.addValues = function (values) {
+
+        this.values += values;
+    }
+
+
+    this.getSrc = function () {
+        return this.src;
+    }
+    this.getValues = function () {
+        return this.values;
+
+    }
+    this.getPrices = function () {
+        return this.price;
+    }
+    return this;
+}
+function getCookie(key) {
+    $.cookie
+}
+function loadCart() {
+    for(var i =0; i<listItem.length;i++){
+        $("#add_item").after(addItem(listItem[i].getSrc(),listItem[i].getPrices(), listItem[i].getValues()));
+    }
 }
