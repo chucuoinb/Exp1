@@ -9,6 +9,12 @@ var positionItemMaxProduct = 5;
 var numberOfItemProduct = 8;
 var idListItemProduct = "#list_item_right";
 var numberDisplayItemProduct = 4;
+var positionItemMinProductEnd = 0;
+var positionItemMaxProductEnd = 4;
+var numberOfItemProductEnd = 8;
+var idListItemProductEnd = "#list_item_product";
+var idItemProductEnd = "#list_item_product_img";
+var numberDisplayItemProductEnd = 3;
 var numberDisplayItemBanner = 1;
 var idItemBanner = "#img";
 var idItemProduct = "#list_item_right_img";
@@ -27,7 +33,7 @@ $(function () {
     //     $(this).css("color", "#444444")
     // });
     $("#review_text").focusin(function () {
-        this.css("border","0px solid #2eabd9")
+        this.css("border", "0px solid #2eabd9")
     })
     $("#1").focusout(function () {
         if ($.trim($(this).val()).length == 0) {
@@ -239,43 +245,107 @@ $(function () {
 
     // /add cart
     $("#bt_add_cart").click(function () {
-        srcItemCart = $("#img_item_large").attr("src");
-        numberOfItemCart = parseInt($("#number_of_item").val());
-        if (listItem.length > 0) {
-            for(var i =0;i<listItem.length;i++){
-                if(listItem[i].getSrc() == srcItemCart){
-                    listItem[i].addValues(numberOfItemCart);
-                    checkExistItem = true;
-                }
-            }
-            if (checkExistItem == false) {
-                var item = new Item();
-                item.setInfo(srcItemCart,344,numberOfItemCart)
-                listItem.push(item);
+        if (checkNumber()) {
 
+
+            srcItemCart = $("#img_item_large").attr("src");
+            numberOfItemCart = parseInt($("#number_of_item").val());
+            if (listItem.length > 0) {
+                for (var i = 0; i < listItem.length; i++) {
+                    if (listItem[i].getSrc() == srcItemCart) {
+                        listItem[i].addValues(numberOfItemCart);
+                        checkExistItem = true;
+                    }
+                }
+                if (checkExistItem == false) {
+                    var item = new Item();
+                    item.setInfo(srcItemCart, 344, numberOfItemCart)
+                    listItem.push(item);
+
+                }
+                checkExistItem = false;
+            } else {
+                var item = new Item();
+                item.setInfo(srcItemCart, 355.00, numberOfItemCart);
+                listItem.push(item);
             }
-            checkExistItem =false;
-        } else {
-            var item = new Item();
-            item.setInfo(srcItemCart,355.00,numberOfItemCart);
-            listItem.push(item);
+        }
+    });
+
+    //delete
+    $(document).on("click", ".cancel", function () {
+        var index = $(".cancel").index(this);
+        // alert(index)
+        deleteItem($(".img_cart").eq(index).attr("src"));
+        $(".cart").eq(index).remove();
+        // loadCart();
+    });
+    $("#menu_card").hover(function () {
+        $(".cart").remove();
+        loadCart();
+        $("#sub_menu1").css("display", "block");
+    }, function () {
+        $("#sub_menu1").css("display", "none");
+        $(".cart").remove();
+    });
+
+    $("#next_product_end").click(function () {
+        if (click == false) {
+            click = true;
+            clearTimeout(timeOutMove);
+            timeOutMove = setTimeout(function () {
+                click = false;
+            }, speed);
+            if (positionItemMinProductEnd == 0) {
+                positionItemMinProductEnd = numberOfItemProductEnd - 1;
+            }
+
+            else {
+                positionItemMinProductEnd--;
+            }
+            if (positionItemMaxProductEnd == 0)
+                positionItemMaxProductEnd = numberOfItemProductEnd - 1;
+            else
+                positionItemMaxProductEnd--;
+            nextItem(positionItemMinProductEnd, $(".list_item_product"), srcItemBanner, numberDisplayItemProductEnd, idItemProductEnd, idListItemProductEnd);
 
         }
     });
-    
-    //delete
-    $(document).on("click",".cancel",function () {
-        var index = $(".cancel").index(this);
-        $(".cart").eq(index).remove();
-        alert($(".igItem >a>img").eq(index).attr("src"));
-    })
-    $("#menu_card").hover(function () {
+    $("#pre_product_end").click(function () {
+        if (click == false) {
+            click = true;
+            clearTimeout(timeOutMove);
+            timeOutMove = setTimeout(function () {
+                click = false;
+            }, speed);
+            if (positionItemMinProductEnd == numberOfItemProductEnd - 1) {
+                positionItemMinProductEnd = 0;
+            }
 
-        loadCart();
-        $("#sub_menu1").css("display","block");
-    },function () {
-        $("#sub_menu1").css("display","none");
-        $(".cart").remove();
+            else {
+                positionItemMinProductEnd++;
+            }
+            if (positionItemMaxProductEnd == numberOfItemProductEnd - 1)
+                positionItemMaxProductEnd = 0;
+            else
+                positionItemMaxProductEnd++;
+            preItem(positionItemMinProductEnd, $(".list_item_product"), srcItemBanner, numberDisplayItemProductEnd, idItemProductEnd, idListItemProductEnd);
+
+        }
+    });
+
+    $("#form_review").submit(function () {
+        return validateForm();
+    });
+
+    $("#newsletter_input_email").change(function () {
+       if (!checkEmail($("#newsletter_input_email").val())){
+           $("#newsletter_input_email_error").text("Email nhập sai");
+           $("#newsletter_input_email_true").css("display","none");
+       }else {
+           $("#newsletter_input_email_error").text("");
+           $("#newsletter_input_email_true").css("display","inline-block");
+       }
     });
 });
 var checksum = 0;
@@ -402,7 +472,7 @@ function displayTab(index) {
     $(".content_tab").removeClass("tab_display");
     $(".content_tab").eq(index).addClass("tab_display");
 }
-function addItem(src, price,value) {
+function addItem(src, price, value) {
     var strCart = "<li class='cart'>" +
         "<a href='#asda'>" +
         "<div class='itemincard'>" +
@@ -463,7 +533,82 @@ function getCookie(key) {
     $.cookie
 }
 function loadCart() {
-    for(var i =0; i<listItem.length;i++){
-        $("#add_item").after(addItem(listItem[i].getSrc(),listItem[i].getPrices(), listItem[i].getValues()));
+    for (var i = 0; i < listItem.length; i++) {
+        $("#add_item").after(addItem(listItem[i].getSrc(), listItem[i].getPrices(), listItem[i].getValues()));
     }
+}
+
+function validateForm() {
+    var flag = true;
+    var nickname = $("#input_nickname").val();
+    var summary = $("#input_summary").val();
+    var review = $("#review_text").val();
+    var nickname_error = $("#input_nickname_error");
+    var summary_error = $("#input_summary_error");
+    var review_error = $("#review_text_error");
+    if (nickname.length < 6 || nickname.length > 12) {
+        flag = false;
+        nickname_error.text("Nickname có từ 6 đến 12 kí tự");
+    } else {
+        nickname_error.text("");
+    }
+
+    if (summary.length < 6 || nickname.length > 12) {
+        flag = false;
+        summary_error.text("Nickname có từ 6 đến 12 kí tự");
+    } else {
+        summary_error.text("");
+    }
+
+    if (review.length > 30) {
+        flag = false;
+        review_error.text("Nhập tối đa 30 kí tự");
+    } else {
+        review_error.text("");
+    }
+    return flag;
+}
+function checkEmail(email) {
+    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if (!filter.test(email)) {
+        return false;
+    }
+    else
+        return true;
+
+}
+
+function checkNumber() {
+
+    var flag = true;
+    var values = $("#number_of_item").val();
+    var error = $("#number_of_item_error");
+    var filter = /^[0-9]$/;
+    if (filter.test(values)) {
+        values = parseInt(values);
+        if (values < 0 || values > 10) {
+            error.text("Nhập số từ 1 đến 10");
+            flag = false;
+        } else {
+            error.text("");
+        }
+        return flag;
+
+    }
+    else {
+        error.text("Nhập số từ 1 đến 10");
+        return false;
+    }
+}
+function deleteItem(src) {
+    var index;
+    for (var i =0; i<listItem.length;i++){
+        if (listItem[i].getSrc() == src){
+            index=i;
+            break;
+        }
+
+    }
+    // alert(index)
+    listItem.splice(index,1);
 }

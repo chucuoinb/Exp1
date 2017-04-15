@@ -65,9 +65,11 @@
                     <p class="title_content_product">Newsletter Signup</p>
                     <p id="newsletter_text">Phasellus vel ultricies felis. Duis rhonc
                         risus eu urna pretium.</p>
-                    <div id="newsletter_input_email">
-                        <input type="text" placeholder="Enter your email address...">
+                    <div id="newsletter_input">
+                        <input  id="newsletter_input_email" type="text" placeholder="Enter your email address...">
+                        <i id="newsletter_input_email_true" class="fa fa-check" aria-hidden="true"></i>
                     </div>
+                    <span id="newsletter_input_email_error" class="error">a</span>
                     <div id="newsletter_button_subscribe">
                         <a href="##">
 
@@ -196,6 +198,7 @@
                                     <p>Quantity: </p>
                                     <div>
                                         <input id="number_of_item" type="text">
+                                        <span id="number_of_item_error"></span>
                                         <div id="bt_add_cart"><p>Add To Cart</p></div>
                                     </div>
                                 </div>
@@ -213,25 +216,30 @@
                     <div class="line"></div>
                     <div id="content_tab">
                         <div class="content_tab ">
-                            <p>Tab1</p>
+                            <p>Tables Style</p>
                         </div>
                         <div class="content_tab tab_display">
-                            <form action="">
+                            <p>Customer reviews</p>
+                            <form  id="form_review">
 
                                 <div id="tab2_top">
                                     <div id="nickname" class="tab2_top">
                                         <p class="tab2_p">Nickname <span>*</span></p>
-                                        <input type="text">
+                                        <input type="text" id="input_nickname">
+                                        <span id="input_nickname_error" class="error"></span>
                                     </div>
                                     <div id="summary" class="tab2_top">
                                         <p class="tab2_p">Summary Of Your Review <span>*</span></p>
-                                        <input type="text">
+                                        <input type="text" id="input_summary">
+                                        <span id="input_summary_error" class="error"></span>
                                     </div>
                                 </div>
 
                                 <div id="tab2_bottom">
                                     <p class="tab2_p">Review <span>*</span></p>
                                     <textarea name="" id="review_text"></textarea>
+                                    <span id="review_text_error" class="error"></span>
+
                                     <p id="note_review">Note: HTML is not translated!
                                     </p>
                                 </div>
@@ -240,7 +248,7 @@
                             </form>
                         </div>
                         <div class="content_tab">
-                            <p>Tab3</p>
+                            <p>Custom Tab</p>
                         </div>
                     </div>
                 </div>
@@ -248,8 +256,8 @@
                     <div id="list_item_product_title">
                         <p>Related Products</p>
                         <div>
-                            <div><img src="../images/bt_next.png" alt=""></div>
-                            <div><img src="../images/bt_previous.png" alt=""></div>
+                            <div id="pre_product_end"><img src="../images/bt_previous.png" alt=""></div>
+                            <div id="next_product_end"><img src="../images/bt_next.png" alt=""></div>
                         </div>
                     </div>
                     <div id="list_item_product">
@@ -292,7 +300,7 @@
                             <div>
                                 <div class="list_item_product_item">
                                     <div>
-                                        <img id="list_item_product_img0" src="../images/item0.png" class="center"
+                                        <img id="list_item_product_img0" src="../images/item1.png" class="center"
                                              alt="">
                                     </div>
                                     <p>Febreze Air Effects New Zealand Springs</p>
@@ -327,7 +335,7 @@
                             <div>
                                 <div class="list_item_product_item">
                                     <div>
-                                        <img id="list_item_product_img0" src="../images/item0.png" class="center"
+                                        <img id="list_item_product_img0" src="../images/item2.png" class="center"
                                              alt="">
                                     </div>
                                     <p>Febreze Air Effects New Zealand Springs</p>
@@ -362,7 +370,7 @@
                             <div>
                                 <div class="list_item_product_item">
                                     <div>
-                                        <img id="list_item_product_img0" src="../images/item0.png" class="center"
+                                        <img id="list_item_product_img0" src="../images/item3.png" class="center"
                                              alt="">
                                     </div>
                                     <p>Febreze Air Effects New Zealand Springs</p>
@@ -397,7 +405,7 @@
                             <div>
                                 <div class="list_item_product_item">
                                     <div>
-                                        <img id="list_item_product_img0" src="../images/item0.png" class="center"
+                                        <img id="list_item_product_img0" src="../images/item4.png" class="center"
                                              alt="">
                                     </div>
                                     <p>Febreze Air Effects New Zealand Springs</p>

@@ -1486,6 +1486,10 @@ article {
     overflow: hidden;
 }
 
+.error{
+    color: #d07277;
+}
+
 #tab2_top{
     margin-top: 50px !important;
     width: 100%;
@@ -1617,20 +1621,24 @@ article {
     box-sizing: border-box;
     border: 1px solid #e0e0e0;
 }
+.list_item_product:hover{
+    border-color: #72c4eb;
+    cursor: pointer;
+}
 #list_item_product_item0{
-    left: -262px;
+    left: -262.5px;
 }
 #list_item_product_item1{
     left: 0px;
 }
 #list_item_product_item2{
-    left: 262px;
+    left: 262.5px;
 }
 #list_item_product_item3{
-    left: 524px;
+    left: 525px;
 }
 #list_item_product_item4{
-    left: 786px;
+    left: 787.5px;
 }
 
 .list_item_product >div{
