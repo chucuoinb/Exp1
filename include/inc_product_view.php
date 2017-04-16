@@ -20,7 +20,7 @@
                     <li><a>Electric (17)</a></li>
                     <li><a>For Cars (23)</a></li>
                     <li><a>For Room (7)</a></li>
-                    <li class="menu_bottom"><a>Other (135)</a></li>
+                    <li class="menu_bottom"><a>Other (137)</a></li>
                 </ul>
                 <div id="special">
                     <p class="title_content_product">Special</p>
