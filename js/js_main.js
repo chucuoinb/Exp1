@@ -32,6 +32,7 @@ $(function () {
     //     $(this).val("");
     //     $(this).css("color", "#444444")
     // });
+
     loadCart();
     loadTotalPrice();
     $("#1").focusout(function () {
@@ -521,9 +522,9 @@ function Item() {
 //     $.cookie
 // }
 function loadCart() {
-    if($.cookie("my_cookie") != null){
-
-    var strJson = $.cookie("my_cookie");
+    if(getCookie("my_cookie") != ""){
+    // alert(getCookie("my_cookie"))
+    var strJson = getCookie("my_cookie");
     var listItem = JSON.parse(strJson);
     if (listItem.length == 0) {
         $("#no_item").text("Bạn chưa chọn sản phẩm nào");
@@ -626,7 +627,7 @@ function checkNumber() {
     }
 }
 function deleteItem(src) {
-    var strJson = $.cookie("my_cookie");
+    var strJson = getCookie("my_cookie");
     // alert(strJson)
     var listItem = JSON.parse(strJson);
     var index;
@@ -640,7 +641,7 @@ function deleteItem(src) {
     // alert(index)
     listItem.splice(index, 1);
     var jsonStr = JSON.stringify(listItem);
-    $.cookie("my_cookie", jsonStr, {expires: 10});
+    setCookie("my_cookie", jsonStr, 1);
     loadTotalPrice()
 }
 function validate(id) {
@@ -664,8 +665,8 @@ function validate(id) {
 }
 function addCart(srcItemCart,numberOfItemCart) {
     var listItem = new Array();
-    if ($.cookie("my_cookie") !=null) {
-        var strJson = $.cookie("my_cookie");
+    if (getCookie("my_cookie") !="") {
+        var strJson = getCookie("my_cookie");
         var listItem = JSON.parse(strJson);
         for (var i = 0; i < listItem.length; i++) {
             if (listItem[i]["src"] == srcItemCart) {
@@ -686,14 +687,14 @@ function addCart(srcItemCart,numberOfItemCart) {
         listItem.push(item);
     }
     var jsonStr = JSON.stringify(listItem);
-    $.cookie("my_cookie", jsonStr, {expires: 10});
+    setCookie("my_cookie", jsonStr, 1);
     loadTotalPrice();
     alert("Bạn đã thêm sản phẩm thành công");
 }
 function loadTotalPrice() {
-    if($.cookie("my_cookie") != null) {
+    if(getCookie("my_cookie") != "") {
         var total = 0;
-        var strJson = $.cookie("my_cookie");
+        var strJson = getCookie("my_cookie");
         // alert(strJson)
         var listItem = JSON.parse(strJson);
         for (var i = 0; i < listItem.length; i++) {
@@ -701,4 +702,20 @@ function loadTotalPrice() {
         }
         $("#total_price").text(total)
     }
+}
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+    return "";
 }
