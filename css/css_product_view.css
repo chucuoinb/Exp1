@@ -173,6 +173,7 @@
     width: calc(100% - 40px);
     display: inline-block;
 }
+
 #newsletter_input_email_true{
     color: blue;
     display: none;
@@ -530,11 +531,12 @@
 }
 #add_to_cart_right >div>input{
     border: 1px solid #cccccc;
-    max-width: 20%;
     padding-left: 5px;
     height: 100%;
     line-height: 30px;
     border-right: 0px;
+    padding-right: 10px;
+    width: 15%;
 }
 #add_to_cart_right >div>div{
     float: right;

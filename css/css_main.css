@@ -65,7 +65,7 @@ hr._hr1 {
     display: inline;
     margin-top: 20px;
     position: absolute;
-    left: 24%;
+    left: 20%;
 }
 
 #innersearch {
@@ -119,7 +119,7 @@ hr._hr1 {
 }
 
 #account {
-    width: 46%;
+    width: 50%;
     height: 100%;
     position: absolute;
     /*margin-top: 20px*/
@@ -184,6 +184,8 @@ hr._hr1 {
     border: 1px solid #CCCCCC;
     max-height: 400px !important;
 
+}
+#no_item{
 }
 
 .sub-menu1 > li > a {
@@ -346,14 +348,14 @@ hr._hr1 {
     right: 0;
     border-radius: 3px;
     padding: 10px 15px 10px 10px;
-    font-size: 12px;
+    font-size: 11px;
     margin-left: 2px;
 }
 
 #acc {
     font-size: 10pt;
     position: absolute;
-    left: 0;
+    right: 0;
     top: 1px;
 }
 
@@ -1564,7 +1566,7 @@ article {
 }
 
 #right_product_end{
-    margin-top: 20px;
+    margin-top: 60px;
     width: 100%;
 
 }
@@ -1697,6 +1699,10 @@ article {
     top: 0px;
     height: 100%;
 }
+#menu_card{
+    position: absolute;
+    right: 0px !important;
+}
 .content_price >div{
     position: relative;
     width: 100%;
@@ -1712,5 +1718,8 @@ article {
 }
 .bay{
     left: 80%;
+}
+.bay:hover{
+    background-color: #72c4eb;
 }
 

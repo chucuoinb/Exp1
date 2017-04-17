@@ -32,9 +32,8 @@ $(function () {
     //     $(this).val("");
     //     $(this).css("color", "#444444")
     // });
-    $("#review_text").focusin(function () {
-        this.css("border", "0px solid #2eabd9")
-    })
+    loadCart();
+    loadTotalPrice();
     $("#1").focusout(function () {
         if ($.trim($(this).val()).length == 0) {
             $(this).val("Search entrie store here...");
@@ -225,14 +224,14 @@ $(function () {
     //vote
     $(".bt_vote").click(function () {
         var index = $(".bt_vote").index(this);
-        if (index == positionVote) {
-            deleteVote();
-            positionVote = -1;
-        } else {
-
-            positionVote = index;
-            changeVote(index);
-        }
+        // if (index == positionVote) {
+        //     deleteVote();
+        //     positionVote = -1;
+        // } else {
+        //
+        //     positionVote = index;
+        changeVote(index);
+        // }
     });
 
     //tab
@@ -246,30 +245,17 @@ $(function () {
     // /add cart
     $("#bt_add_cart").click(function () {
         if (checkNumber()) {
-
-
             srcItemCart = $("#img_item_large").attr("src");
             numberOfItemCart = parseInt($("#number_of_item").val());
-            if (listItem.length > 0) {
-                for (var i = 0; i < listItem.length; i++) {
-                    if (listItem[i].getSrc() == srcItemCart) {
-                        listItem[i].addValues(numberOfItemCart);
-                        checkExistItem = true;
-                    }
-                }
-                if (checkExistItem == false) {
-                    var item = new Item();
-                    item.setInfo(srcItemCart, 344, numberOfItemCart)
-                    listItem.push(item);
-
-                }
-                checkExistItem = false;
-            } else {
-                var item = new Item();
-                item.setInfo(srcItemCart, 355.00, numberOfItemCart);
-                listItem.push(item);
-            }
+            addCart(srcItemCart,numberOfItemCart)
         }
+    });
+
+    $(".bay").click(function () {
+        var index = $(".bay").index(this);
+        var src = $(idItemProductEnd + index).attr("src");
+        addCart(src,1);
+        // alert(src)
     });
 
     //delete
@@ -278,7 +264,6 @@ $(function () {
         // alert(index)
         deleteItem($(".img_cart").eq(index).attr("src"));
         $(".cart").eq(index).remove();
-        // loadCart();
     });
     $("#menu_card").hover(function () {
         $(".cart").remove();
@@ -339,13 +324,14 @@ $(function () {
     });
 
     $("#newsletter_input_email").change(function () {
-       if (!checkEmail($("#newsletter_input_email").val())){
-           $("#newsletter_input_email_error").text("Email nhập sai");
-           $("#newsletter_input_email_true").css("display","none");
-       }else {
-           $("#newsletter_input_email_error").text("");
-           $("#newsletter_input_email_true").css("display","inline-block");
-       }
+        alert(this.id)
+        if (!checkEmail($("#newsletter_input_email").val())) {
+            $("#newsletter_input_email_error").text("Email nhập sai");
+            $("#newsletter_input_email_true").css("display", "none");
+        } else {
+            $("#newsletter_input_email_error").text("");
+            $("#newsletter_input_email_true").css("display", "inline-block");
+        }
     });
 });
 var checksum = 0;
@@ -486,8 +472,10 @@ function addItem(src, price, value) {
         "<a href='#12'><p>Caldrea Linen and Room Spray</p></a>" +
         "<a href='#12'><p>" +
         value +
-        "x " +
+        " x $" +
         price +
+        " = $" +
+        (parseInt(value)* parseInt(price))+
         "</p></a>" +
         "</div>" +
         "<div class='cancel'>" +
@@ -529,15 +517,52 @@ function Item() {
     }
     return this;
 }
-function getCookie(key) {
-    $.cookie
-}
+// function getCookie(key) {
+//     $.cookie
+// }
 function loadCart() {
-    for (var i = 0; i < listItem.length; i++) {
-        $("#add_item").after(addItem(listItem[i].getSrc(), listItem[i].getPrices(), listItem[i].getValues()));
+    if($.cookie("my_cookie") != null){
+
+    var strJson = $.cookie("my_cookie");
+    var listItem = JSON.parse(strJson);
+    if (listItem.length == 0) {
+        $("#no_item").text("Bạn chưa chọn sản phẩm nào");
+    } else {
+        $("#no_item").text("");
+        for (var i = 0; i < listItem.length; i++) {
+            $("#add_item").after(addItem(listItem[i]["src"], listItem[i]["price"], listItem[i]["values"]));
+        }
+    }
     }
 }
 
+function validateNickname() {
+    var nickname = $("#input_nickname").val();
+    var nickname_error = $("#input_nickname_error");
+    if (nickname.length < 6 || nickname.length > 12) {
+        nickname_error.text("Nickname có từ 6 đến 12 kí tự");
+    } else {
+        nickname_error.text("");
+    }
+}
+function validateSummary() {
+    var summary_error = $("#input_summary_error");
+    var summary = $("#input_summary").val();
+    if (summary.length < 6 || nickname.length > 12) {
+        summary_error.text("Nickname có từ 6 đến 12 kí tự");
+    } else {
+        summary_error.text("");
+    }
+}
+function validateReview() {
+    var review_error = $("#review_text_error");
+    var review = $("#review_text").val();
+    if (review.length > 30) {
+        review_error.text("Nhập tối đa 30 kí tự");
+    } else {
+        review_error.text("");
+    }
+}
 function validateForm() {
     var flag = true;
     var nickname = $("#input_nickname").val();
@@ -583,11 +608,11 @@ function checkNumber() {
     var flag = true;
     var values = $("#number_of_item").val();
     var error = $("#number_of_item_error");
-    var filter = /^[0-9]$/;
+    var filter = /^([0-9 \.\-])+$/;
     if (filter.test(values)) {
         values = parseInt(values);
-        if (values < 0 || values > 10) {
-            error.text("Nhập số từ 1 đến 10");
+        if (values <= 0) {
+            error.text("Bạn cần nhập số lượng chính xác");
             flag = false;
         } else {
             error.text("");
@@ -596,19 +621,84 @@ function checkNumber() {
 
     }
     else {
-        error.text("Nhập số từ 1 đến 10");
+        error.text("Bạn cần nhập số lượng chính xác");
         return false;
     }
 }
 function deleteItem(src) {
+    var strJson = $.cookie("my_cookie");
+    // alert(strJson)
+    var listItem = JSON.parse(strJson);
     var index;
-    for (var i =0; i<listItem.length;i++){
-        if (listItem[i].getSrc() == src){
-            index=i;
+    for (var i = 0; i < listItem.length; i++) {
+        if (listItem[i]["src"] == src) {
+            index = i;
             break;
         }
 
     }
     // alert(index)
-    listItem.splice(index,1);
+    listItem.splice(index, 1);
+    var jsonStr = JSON.stringify(listItem);
+    $.cookie("my_cookie", jsonStr, {expires: 10});
+    loadTotalPrice()
+}
+function validate(id) {
+    switch (id) {
+        case "#number_of_item":
+            checkNumber();
+            break;
+        case "#form_review":
+            validateForm();
+            break;
+        case "#input_nickname":
+            validateNickname();
+            break;
+        case "#input_summary":
+            validateSummary();
+            break;
+        case "#review_text":
+            validateReview();
+            break;
+    }
+}
+function addCart(srcItemCart,numberOfItemCart) {
+    var listItem = new Array();
+    if ($.cookie("my_cookie") !=null) {
+        var strJson = $.cookie("my_cookie");
+        var listItem = JSON.parse(strJson);
+        for (var i = 0; i < listItem.length; i++) {
+            if (listItem[i]["src"] == srcItemCart) {
+                listItem[i]["values"] += numberOfItemCart;
+                checkExistItem = true;
+            }
+        }
+        if (checkExistItem == false) {
+            var item = new Item();
+            item.setInfo(srcItemCart, "550.00", numberOfItemCart)
+            listItem.push(item);
+
+        }
+        checkExistItem = false;
+    } else {
+        var item = new Item();
+        item.setInfo(srcItemCart, "550.00", numberOfItemCart);
+        listItem.push(item);
+    }
+    var jsonStr = JSON.stringify(listItem);
+    $.cookie("my_cookie", jsonStr, {expires: 10});
+    loadTotalPrice();
+    alert("Bạn đã thêm sản phẩm thành công");
+}
+function loadTotalPrice() {
+    if($.cookie("my_cookie") != null) {
+        var total = 0;
+        var strJson = $.cookie("my_cookie");
+        // alert(strJson)
+        var listItem = JSON.parse(strJson);
+        for (var i = 0; i < listItem.length; i++) {
+            total += parseInt(listItem[i]["price"]) * parseInt(listItem[i]["values"]);
+        }
+        $("#total_price").text(total)
+    }
 }

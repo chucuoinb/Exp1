@@ -69,7 +69,7 @@
                         <input  id="newsletter_input_email" type="text" placeholder="Enter your email address...">
                         <i id="newsletter_input_email_true" class="fa fa-check" aria-hidden="true"></i>
                     </div>
-                    <span id="newsletter_input_email_error" class="error">a</span>
+                    <span id="newsletter_input_email_error" class="error"></span>
                     <div id="newsletter_button_subscribe">
                         <a href="##">
 
@@ -197,7 +197,7 @@
                                 <div id="add_to_cart_right">
                                     <p>Quantity: </p>
                                     <div>
-                                        <input id="number_of_item" type="text">
+                                        <input id="number_of_item" type="text" value="1">
                                         <span id="number_of_item_error"></span>
                                         <div id="bt_add_cart"><p>Add To Cart</p></div>
                                     </div>
@@ -300,7 +300,7 @@
                             <div>
                                 <div class="list_item_product_item">
                                     <div>
-                                        <img id="list_item_product_img0" src="../images/item1.png" class="center"
+                                        <img id="list_item_product_img1" src="../images/item1.png" class="center"
                                              alt="">
                                     </div>
                                     <p>Febreze Air Effects New Zealand Springs</p>
@@ -335,7 +335,7 @@
                             <div>
                                 <div class="list_item_product_item">
                                     <div>
-                                        <img id="list_item_product_img0" src="../images/item2.png" class="center"
+                                        <img id="list_item_product_img2" src="../images/item2.png" class="center"
                                              alt="">
                                     </div>
                                     <p>Febreze Air Effects New Zealand Springs</p>
@@ -370,7 +370,7 @@
                             <div>
                                 <div class="list_item_product_item">
                                     <div>
-                                        <img id="list_item_product_img0" src="../images/item3.png" class="center"
+                                        <img id="list_item_product_img3" src="../images/item3.png" class="center"
                                              alt="">
                                     </div>
                                     <p>Febreze Air Effects New Zealand Springs</p>
@@ -405,7 +405,7 @@
                             <div>
                                 <div class="list_item_product_item">
                                     <div>
-                                        <img id="list_item_product_img0" src="../images/item4.png" class="center"
+                                        <img id="list_item_product_img4" src="../images/item4.png" class="center"
                                              alt="">
                                     </div>
                                     <p>Febreze Air Effects New Zealand Springs</p>
