@@ -30,7 +30,9 @@ body {
     margin-top: 35px;
     position: relative;
 }
-
+.bt_delete_item{
+    z-index: 1111;
+}
 hr {
     clear: both;
     width: 100%;
@@ -364,7 +366,7 @@ hr._hr1 {
     background-color: #d5e4f1;
 }
 #menu_card:hover #sub_menu1{
-    display: block !important;
+    display: block;
 }
 
 #search img:hover {

@@ -21,20 +21,53 @@ var idItemProduct = "#list_item_right_img";
 var click = false;
 var timeOutMove;
 var positionLagre;
+var idPrice = "#list_item_product_price";
 var positionVote = -1;
 var srcItemCart;
 var numberOfItemCart;
 var listItem = new Array();
 var price;
 var checkExistItem = false;
+var flagRegister = true;
+var flagAvatar = false;
 $(function () {
     // $("input").focusin(function () {
     //     $(this).val("");
     //     $(this).css("color", "#444444")
     // });
+    // alert(loadJson());
+    // loadCart();
+    // $("#input_phone_number").change(function () {
+    //         validatePhoneNumber();
+    //
+    // });
+    $("#bt_choose_ava").change(function () {
+        var reader = new FileReader();
 
-    loadCart();
+        reader.onload = function (e) {
+            // get loaded data and render thumbnail.
+            var image = $("#img_avatar").attr("src", e.target.result);
+            var width = $('#img_avatar').prop('naturalWidth');
+            var height = $('#img_avatar').prop('naturalHeight');
+            // alert(width +":"+height)
+            if(width == 0 || height ==0){
+                flagAvatar = false;
+                $("#register_avatar_error").text("File bạn chọn không phải là ảnh");
+                $("#img_avatar").removeAttr("src");
+                $("#bt_choose_ava").val("");
+                $("#input_avatar").css("display","none");
+            }else {
+                $("#register_avatar_error").text("");
+                $("#input_avatar").css("display","block");
+                flagAvatar = true;
+            }
+        };
+
+        // read the image file as a data URL.
+        reader.readAsDataURL(this.files[0]);
+    });
     loadTotalPrice();
+    loadDay();
     $("#1").focusout(function () {
         if ($.trim($(this).val()).length == 0) {
             $(this).val("Search entrie store here...");
@@ -217,7 +250,18 @@ $(function () {
     })
 
     $(".list_item_right").click(function () {
-        $("#item_large >img").attr("src", $(idItemProduct + $(".list_item_right").index(this)).attr("src"));
+        var src = $(idItemProduct + $(".list_item_right").index(this)).attr("src");
+        $("#item_large >img").attr("src", src);
+        $.get("../json/storeUser.php", function (data) {
+            var list = JSON.parse(data);
+            for (var i = 0; i < list.length; i++) {
+                if ((srcItemBanner + list[i]["index"] + ".png") == src) {
+
+                    $("#price_item_large").text(list[i]["price"]);
+                    break;
+                }
+            }
+        })
         $(".list_item_right").removeClass("display");
         $(".list_item_right").eq($(".list_item_right").index(this)).addClass("display");
     });
@@ -248,30 +292,25 @@ $(function () {
         if (checkNumber()) {
             srcItemCart = $("#img_item_large").attr("src");
             numberOfItemCart = parseInt($("#number_of_item").val());
-            addCart(srcItemCart,numberOfItemCart)
+            var price = $("#price_item_large").text();
+            addCart(srcItemCart, numberOfItemCart, price)
         }
     });
 
     $(".bay").click(function () {
         var index = $(".bay").index(this);
         var src = $(idItemProductEnd + index).attr("src");
-        addCart(src,1);
+        var price = $(idPrice + index).text()
+        addCart(src, 1, price);
         // alert(src)
     });
 
     //delete
-    $(document).on("click", ".cancel", function () {
-        var index = $(".cancel").index(this);
-        // alert(index)
-        deleteItem($(".img_cart").eq(index).attr("src"));
-        $(".cart").eq(index).remove();
-    });
+
     $("#menu_card").hover(function () {
         $(".cart").remove();
         loadCart();
-        $("#sub_menu1").css("display", "block");
     }, function () {
-        $("#sub_menu1").css("display", "none");
         $(".cart").remove();
     });
 
@@ -323,9 +362,13 @@ $(function () {
     $("#form_review").submit(function () {
         return validateForm();
     });
-
+    $("#form_register").submit(function () {
+        return validateRegister();
+    });
+    // $("#submit_register").click(function () {
+    // });
     $("#newsletter_input_email").change(function () {
-        alert(this.id)
+        // alert(this.id)
         if (!checkEmail($("#newsletter_input_email").val())) {
             $("#newsletter_input_email_error").text("Email nhập sai");
             $("#newsletter_input_email_true").css("display", "none");
@@ -334,7 +377,16 @@ $(function () {
             $("#newsletter_input_email_true").css("display", "inline-block");
         }
     });
+    $(document).on("click", '.bt_delete_item', function () {
+
+        var index = $(".cart").index(this);
+        // alert(index)
+        deleteItem($(".img_cart").eq(index).attr("src"));
+        $(".cart").eq(index).remove();
+
+    })
 });
+
 var checksum = 0;
 function slideItem(bt, Group, param) {
     bt.click(function () {
@@ -374,9 +426,9 @@ function animateBack(group, param) {
         );
     });
 }
-function validateEmail($email) {
+function validateEmail(email) {
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-    return emailReg.test($email);
+    return emailReg.test(email);
 }
 function nextItem(position, listItem, srcItem, maxItemDisplay, id, idList) {
     var widthItem = parseFloat(listItem.eq(0).css("width"));
@@ -392,6 +444,13 @@ function nextItem(position, listItem, srcItem, maxItemDisplay, id, idList) {
             if (parseInt(item.css("left")) > getLeftItem(maxItemDisplay, paddingItem, widthItem)) {
                 item.css("left", getLeftItem(-1, paddingItem, widthItem));
                 $(id + index).attr("src", srcItem + position + ".png");
+                $.get("../json/storeUser.php", function (data) {
+                    var list = JSON.parse(data);
+                    for (var i = 0; i < list.length; i++) {
+                        if ((list[i]["index"] == position))
+                            $(idPrice + index).text(list[i]["price"]);
+                    }
+                })
             }
             if (id = idItemProduct)
                 changeBorder();
@@ -413,6 +472,13 @@ function preItem(position, listItem, srcItem, maxItemDisplay, id, idList) {
             if (parseInt(item.css("left")) < getLeftItem(-1, paddingItem, widthItem)) {
                 item.css("left", getLeftItem(maxItemDisplay, paddingItem, widthItem));
                 $(id + index).attr("src", srcItem + position + ".png");
+                $.get("../json/storeUser.php", function (data) {
+                    var list = JSON.parse(data);
+                    for (var i = 0; i < list.length; i++) {
+                        if ((list[i]["index"] == position))
+                            $(idPrice + index).text(list[i]["price"]);
+                    }
+                })
             }
             if (id = idItemProduct)
                 changeBorder();
@@ -423,7 +489,10 @@ function getLeftItem(position, paddingItem, widthItem) {
     return position * (widthItem + paddingItem);
 }
 function changeLargeItem(position) {
-
+    $.get("../json/storeUser.php", function (data) {
+        var list = JSON.parse(data);
+        $("#price_item_large").text(list[position]["price"]);
+    })
     $("#item_large>img").attr("src", srcItemBanner + position + ".png");
 }
 function changeBorder() {
@@ -459,7 +528,7 @@ function displayTab(index) {
     $(".content_tab").removeClass("tab_display");
     $(".content_tab").eq(index).addClass("tab_display");
 }
-function addItem(src, price, value) {
+function addItem(src, price, value, name) {
     var strCart = "<li class='cart'>" +
         "<a href='#asda'>" +
         "<div class='itemincard'>" +
@@ -470,17 +539,19 @@ function addItem(src, price, value) {
         "'></a>" +
         "</div>" +
         "<div class='detail'>" +
-        "<a href='#12'><p>Caldrea Linen and Room Spray</p></a>" +
+        "<a href='#12'><p>" +
+        name +
+        "</p></a>" +
         "<a href='#12'><p>" +
         value +
         " x $" +
         price +
         " = $" +
-        (parseInt(value)* parseInt(price))+
+        (parseInt(value) * parseInt(price)) +
         "</p></a>" +
         "</div>" +
         "<div class='cancel'>" +
-        "<p title='delete' class='bt_delete_item'>X</p>" +
+        "<div title='delete' class='bt_delete_item'><i class='fa fa-times' aria-hidden='true'></i></div>" +
         "</div>" +
         "</div>" +
         "</div>" +
@@ -522,19 +593,21 @@ function Item() {
 //     $.cookie
 // }
 function loadCart() {
-    if(getCookie("my_cookie") != ""){
-    // alert(getCookie("my_cookie"))
-    var strJson = getCookie("my_cookie");
-    var listItem = JSON.parse(strJson);
-    if (listItem.length == 0) {
-        $("#no_item").text("Bạn chưa chọn sản phẩm nào");
-    } else {
-        $("#no_item").text("");
-        for (var i = 0; i < listItem.length; i++) {
-            $("#add_item").after(addItem(listItem[i]["src"], listItem[i]["price"], listItem[i]["values"]));
+    // $("#sub_menu1").css("display", "none");
+    if (getCookie("my_cookie") != "") {
+        // alert(getCookie("my_cookie"))
+        var strJson = getCookie("my_cookie");
+        var listItem = JSON.parse(strJson);
+        if (listItem.length == 0) {
+            $("#no_item").text("Bạn chưa chọn sản phẩm nào");
+        } else {
+            $("#no_item").text("");
+            for (var i = 0; i < listItem.length; i++) {
+                $("#add_item").after(addItem(listItem[i]["src"], listItem[i]["price"], listItem[i]["values"]));
+            }
         }
     }
-    }
+    // $("#sub_menu1").css("display", "block");
 }
 
 function validateNickname() {
@@ -663,9 +736,9 @@ function validate(id) {
             break;
     }
 }
-function addCart(srcItemCart,numberOfItemCart) {
+function addCart(srcItemCart, numberOfItemCart, price) {
     var listItem = new Array();
-    if (getCookie("my_cookie") !="") {
+    if (getCookie("my_cookie") != "") {
         var strJson = getCookie("my_cookie");
         var listItem = JSON.parse(strJson);
         for (var i = 0; i < listItem.length; i++) {
@@ -676,14 +749,14 @@ function addCart(srcItemCart,numberOfItemCart) {
         }
         if (checkExistItem == false) {
             var item = new Item();
-            item.setInfo(srcItemCart, "550.00", numberOfItemCart)
+            item.setInfo(srcItemCart, price, numberOfItemCart)
             listItem.push(item);
 
         }
         checkExistItem = false;
     } else {
         var item = new Item();
-        item.setInfo(srcItemCart, "550.00", numberOfItemCart);
+        item.setInfo(srcItemCart, price, numberOfItemCart);
         listItem.push(item);
     }
     var jsonStr = JSON.stringify(listItem);
@@ -692,7 +765,7 @@ function addCart(srcItemCart,numberOfItemCart) {
     alert("Bạn đã thêm sản phẩm thành công");
 }
 function loadTotalPrice() {
-    if(getCookie("my_cookie") != "") {
+    if (getCookie("my_cookie") != "") {
         var total = 0;
         var strJson = getCookie("my_cookie");
         // alert(strJson)
@@ -705,17 +778,265 @@ function loadTotalPrice() {
 }
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
-    d.setTime(d.getTime() + (exdays*24*60*60*1000));
-    var expires = "expires="+d.toUTCString();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toUTCString();
     document.cookie = cname + "=" + cvalue + "; " + expires;
 }
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
-    for(var i=0; i<ca.length; i++) {
+    for (var i = 0; i < ca.length; i++) {
         var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1);
+        while (c.charAt(0) == ' ') c = c.substring(1);
         if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
     }
     return "";
+}
+function loadJson() {
+    $.get("../json/storeUser.php", function (data) {
+        return data;
+    })
+}
+
+function validateRegister() {
+    flagRegister = true;
+    console.log("empty: "+checkEmpty());
+    if (!checkEmpty()){
+
+        flagRegister = false;
+    }
+    console.log("mail:"+validateMail());
+    if (!validateMail())
+        flagRegister = false;
+    console.log("user:"+validateUsername());
+    if (!validateUsername())
+        flagRegister = false;
+    console.log("pass:"+validatePassword());
+    if (validatePassword()) {
+        console.log("retype:"+validateRetypePassword());
+        if (!validateRetypePassword())
+            flagRegister = false;
+    } else {
+        flagRegister = false;
+    }
+    console.log("phone:"+validatePhoneNumber());
+    if (!validatePhoneNumber())
+        flagRegister = false;
+    console.log("day:"+validateBirthday($("#day").val(), $("#month").val(), $("#year").val()));
+    if (!validateBirthday($("#day").val(), $("#month").val(), $("#year").val()))
+        flagRegister = false;
+    console.log("ava:"+checkEmptyAvatar());
+    if (!checkEmptyAvatar())
+        flagRegister = false;
+    // if (!flagAvatar)
+    //     flagRegister = false;
+    if (flagRegister)
+        $("#input_birthday").val(getBirthday());
+    return flagRegister;
+}
+function checkWordSpecil(str) {
+    var filter = /^([0-9a-zA-Z /_])+$/;
+    return filter.test(str)
+}
+function checkLengh(id, message) {
+    if (($.trim($("#input_" + id).val()).length) > 8 && ($.trim($("#input_" + id).val()).length) < 15) {
+        $("#register_" + id + "_error").text("");
+        $("#register_" + id + "_true").removeClass("register_validate");
+        return true;
+    } else {
+        $("#register_" + id + "_error").text("Nhập " + message + " từ 8 đến 20 kí tự");
+        $("#register_" + id + "_true").addClass("register_validate");
+        return false;
+    }
+
+}
+function checkEmpty() {
+    var flag = true;
+    $(".register_input").each(function (index, object) {
+        var item = $(object);
+        if ($.trim(item.val().length) == 0) {
+            $(".register_error_field").eq(index).text("Bạn không được để trống trường nào");
+            flag = false;
+        } else {
+            $(".register_error_field").eq(index).text("");
+        }
+    });
+    return flag;
+}
+function validateFullname() {
+    // var name = $("#input_name");
+    // if (checkLengh("name", "Họ tên")) {
+    //     if (checkWordSpecil(name.val())) {
+    //         $("#register_name_error").text("");
+    //         $("#register_name_true").removeClass("register_validate");
+    //         return true;
+    //     } else {
+    //         $("#register_name_error").text("Họ tên không được có kí tự đặc biệt");
+    //         $("#register_name_true").addClass("register_validate");
+    //         return false;
+    //     }
+    // }
+    // else return false;
+}
+function validateMail() {
+    var email = $("#input_email").val();
+    // if(checkLengh("email","email")){
+    if ($.trim(email).length > 0) {
+        if (!validateEmail(email)) {
+
+            $("#register_email_error").text("Email nhập sai");
+            $("#register_email_true").addClass("register_validate");
+            return false;
+        } else {
+            $("#register_email_error").text("");
+            $("#register_email_true").removeClass("register_validate");
+            return true;
+        }
+    }
+    else return false;
+}
+function validateRetypePassword() {
+    var password = $("#input_password");
+    var password2 = $("#input_password_2");
+    if (($.trim(password.val()) != ($.trim(password2.val())))) {
+        $("#register_password_error2").text("Nhập lại password chưa đúng");
+        $("#register_password_true2").addClass("register_validate");
+        return false;
+    }
+    else {
+        $("#register_password_error2").text("");
+        $("#register_password_true2").removeClass("register_validate");
+        return true;
+    }
+}
+function validateUsername() {
+    var name = $("#input_username");
+    if (checkLengh("username", "Tên đăng nhập")) {
+        if (checkWordSpecil(name.val())) {
+            $("#register_username_error").text("");
+            $("#register_username_true").removeClass("register_validate");
+            return true;
+        } else {
+            $("#register_username_error").text("Tên đăng nhập không được có kí tự đặc biệt");
+            $("#register_username_true").addClass("register_validate");
+            return false;
+        }
+    }
+    else return false;
+}
+function validatePassword() {
+    var name = $("#input_password");
+    if (checkLengh("password", "Mật khẩu")) {
+        if (checkWordSpecil(name.val())) {
+            $("#register_password_error").text("");
+            $("#register_password_true").removeClass("register_validate");
+            return true;
+        } else {
+            $("#register_password_error").text("Mật khẩu không được có kí tự đặc biệt");
+            $("#register_password_true").addClass("register_validate");
+            return false;
+        }
+    }
+    else return false;
+}
+function validateAddress() {
+    // var name = $("#input_address");
+    // if (checkLengh("address", "Địa chỉ")) {
+    //     if (checkWordSpecil(name.val())) {
+    //         $("#register_address_error").text("");
+    //         $("#register_address_true").removeClass("register_validate");
+    //         return true;
+    //     } else {
+    //         $("#register_password_error").text("Địa chỉ không được có kí tự đặc biệt");
+    //         $("#register_password_true").addClass("register_validate");
+    //         return false;
+    //     }
+    // }
+    // else return false;
+}
+
+function validatePhoneNumber() {
+    var flagphone = true;
+    var phone = $("#input_phone_number");
+    var filter = new Array();
+     filter[0] = /^09[0-8]{1}[0-9]{7}$/;
+     filter[1]= /^016[3-9]{1}[0-9]{7}$/;
+     filter[3] = /^012[0-9]{1}[0-9]{6}$/;
+     filter[4] = /^099[3-6]{1}[0-9]{6}$/;
+     filter[2] =/^01(88|99)[0-9]{6}$/;
+    for(var i=0;i<=4;i++){
+        if (filter[i].test($.trim(phone.val()))) {
+            $("#register_phone_error").text("");
+            $("#register_phone_true").removeClass("register_validate");
+            return true;
+
+        }
+    }
+    {
+        $("#register_phone_error").text("Số điện thoại nhập sai");
+        $("#register_phone_true").addClass("register_validate");
+        return false;
+    }
+
+}
+function addDay(index) {
+    var str = "<option value='" +
+        index +
+        "'>" +
+        index +
+        "</option>";
+    return str;
+}
+function loadDay() {
+    for (var i = 31; i >= 2; i--)
+        $("#day1").after(addDay(i))
+    for (var i = 12; i >= 2; i--)
+        $("#month1").after(addDay(i))
+    for (var i = 2017; i >= 1961; i--)
+        $("#year1").after(addDay(i))
+}
+function validateBirthday(day, month, year) {
+
+    var d = new Date(year, month - 1, day);
+    if (d && (d.getMonth()) + 1 == month) {
+        $("#register_birthday_error").text("");
+        return true;
+    } else {
+        $("#register_birthday_error").text("Bạn chọn sai ngày");
+        return false;
+    }
+
+}
+function getBirthday() {
+    var day = $("#day").val();
+    var month = $("#month").val();
+    var year = $("#year").val();
+    console.log(day);
+    console.log(month);
+    console.log(year);
+    if (validateBirthday(day, month, year)) {
+
+        if (parseInt(day) < 10)
+            day = "0" + day;
+        if (parseInt(month) < 10)
+            month = "0" + month;
+        console.log(day + "/" + month + "/" + year);
+        return day + "/" + month + "/" + year;
+    } else
+        return "";
+}
+function checkEmptyAvatar() {
+    if ($("#bt_choose_ava").val() == "") {
+        $("#register_avatar_error").text("Bạn chưa chọn avatar");
+        return false;
+    }
+    else {
+        $("#register_avatar_error").text("");
+        return true;
+    }
+
+}
+function checkImage() {
+    var width = $('#hidden_avatar').prop('naturalWidth');
+    var height = $('#hidden_avatar').prop('naturalHeight');
 }

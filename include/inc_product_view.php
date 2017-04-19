@@ -37,7 +37,7 @@
                                     Luminary Refill
                                 </p>
                                 <p class="price_special">
-                                    <span class="price_old">$177.00</span><span class="price_sale">$75.00</span>
+                                    <span class="price_old">$177</span><span class="price_sale">$75</span>
                                 </p>
                             </div>
 
@@ -54,7 +54,7 @@
                                     Luminary Refill
                                 </p>
                                 <p class="price_special">
-                                    <span class="price_old">$177.00</span><span class="price_sale">$75.00</span>
+                                    <span class="price_old">$177</span><span class="price_sale">$75</span>
                                 </p>
                             </div>
 
@@ -179,8 +179,8 @@
                                     <p>SKU: <span class="colorBlack"> Candles OV</span></p>
                                 </div>
                                 <div id="price_large_right">
-                                    <p id="price_large_sale">$550.00</p>
-                                    <p id="price_large_old">$725.00</p>
+                                    <p id="price_large_sale">$<span id="price_item_large">234</span></p>
+                                    <p id="price_large_old">$725</p>
                                 </div>
                             </div>
                             <div id="add_to_cart">
@@ -272,8 +272,8 @@
                                 </div>
                                 <div class="list_item_product_price">
                                     <div class="price_product">
-                                        <span class="product_sale">$550.00</span> <br>
-                                        <span class="product_old_price">$725.00</span>
+                                        <span class="product_sale">$<span id="list_item_product_price0">123</span></span> <br>
+                                        <span class="product_old_price">$725</span>
                                     </div>
                                     <div class="obn content_price">
                                         <div>
@@ -307,8 +307,8 @@
                                 </div>
                                 <div class="list_item_product_price">
                                     <div class="price_product">
-                                        <span class="product_sale">$550.00</span> <br>
-                                        <span class="product_old_price">$725.00</span>
+                                        <span class="product_sale">$<span id="list_item_product_price1">234</span></span> <br>
+                                        <span class="product_old_price">$725</span>
                                     </div>
                                     <div class="obn content_price">
                                         <div>
@@ -342,8 +342,8 @@
                                 </div>
                                 <div class="list_item_product_price">
                                     <div class="price_product">
-                                        <span class="product_sale">$550.00</span> <br>
-                                        <span class="product_old_price">$725.00</span>
+                                        <span class="product_sale">$<span id="list_item_product_price2">345</span></span> <br>
+                                        <span class="product_old_price">$725</span>
                                     </div>
                                     <div class="obn content_price">
                                         <div>
@@ -377,8 +377,8 @@
                                 </div>
                                 <div class="list_item_product_price">
                                     <div class="price_product">
-                                        <span class="product_sale">$550.00</span> <br>
-                                        <span class="product_old_price">$725.00</span>
+                                        <span class="product_sale">$<span id="list_item_product_price3">456</span></span> <br>
+                                        <span class="product_old_price">$725</span>
                                     </div>
                                     <div class="obn content_price">
                                         <div>
@@ -412,8 +412,8 @@
                                 </div>
                                 <div class="list_item_product_price">
                                     <div class="price_product">
-                                        <span class="product_sale">$550.00</span> <br>
-                                        <span class="product_old_price">$725.00</span>
+                                        <span class="product_sale">$<span id="list_item_product_price4">567</span></span> <br>
+                                        <span class="product_old_price">$725</span>
                                     </div>
                                     <div class="obn content_price">
                                         <div>
