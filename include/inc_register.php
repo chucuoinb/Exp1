@@ -5,7 +5,7 @@
 <!-- * Time: 1:23 PM-->
 <!-- */-->
 <div id="register">
-    <form id="form_register" method="post" action="../php/storeUser.php" target="_blank">
+    <form id="form_register" method="post" action="../php/storeUser.php" target="_blank" enctype="multipart/form-data">
         <div>
             <p class="title_register">Register Customers</p>
 
@@ -116,7 +116,7 @@
                     <div id="input_avatar">
                         <img id="img_avatar"  alt="" >
                     </div>
-                    <input type="file" value="Chọn ảnh" id="bt_choose_ava" accept="image/*">
+                    <input type="file" value="Chọn ảnh" id="bt_choose_ava" accept="image/*" name="use_avatar">
                 </div>
                 <span class="register_error_field" id="register_avatar_error"></span>
             </div>

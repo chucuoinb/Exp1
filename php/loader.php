@@ -19,8 +19,12 @@ class loader{
     private function __construct()
     {
         $this->_connection = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_DATABASE);
+//        $this->_connection->query("SET NAMES utf8");
+//        $this->_connection->query("SET CHARACTER SET utf8");
+        $this->_connection->set_charset('utf8');
+//        $this->_connection->set_charset('utf-8');
         if (mysqli_connect_error()) {
-            trigger_error("Failed to connection to MySQL: " . mysql_connect_error(), E_USER_ERROR);
+            trigger_error("Failed to connection to MySQL: " .mysql_connect_error(), E_USER_ERROR);
         }
     }
 

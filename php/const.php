@@ -15,11 +15,16 @@ define("GENDER","use_gender");
 define("GENDER_MALE",0);
 define("GENDER_FEMALE",1);
 define("BIRTHDAY","use_birthday");
-define("DESCRIPTION","description");
+define("DESCRIPTION","use_description");
 
+define("_ARRAY","array");
 define("STRING","string");
 define("INT","int");
 define("CODE", "code");
 define("TOKEN", "token");
 define("MESSAGE", "message");
 define("DATA", "data");
+define("POST","post");
+define("GET","get");
+define("SESSION","session");
+define("COOKIE","cookie");

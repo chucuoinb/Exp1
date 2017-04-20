@@ -42,29 +42,38 @@ $(function () {
     //
     // });
     $("#bt_choose_ava").change(function () {
-        var reader = new FileReader();
+        if (this.files[0].size < 1024 * 1024) {
 
-        reader.onload = function (e) {
-            // get loaded data and render thumbnail.
-            var image = $("#img_avatar").attr("src", e.target.result);
-            var width = $('#img_avatar').prop('naturalWidth');
-            var height = $('#img_avatar').prop('naturalHeight');
-            // alert(width +":"+height)
-            if(width == 0 || height ==0){
-                flagAvatar = false;
-                $("#register_avatar_error").text("File bạn chọn không phải là ảnh");
-                $("#img_avatar").removeAttr("src");
-                $("#bt_choose_ava").val("");
-                $("#input_avatar").css("display","none");
-            }else {
-                $("#register_avatar_error").text("");
-                $("#input_avatar").css("display","block");
-                flagAvatar = true;
-            }
-        };
 
-        // read the image file as a data URL.
-        reader.readAsDataURL(this.files[0]);
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                // get loaded data and render thumbnail.
+                $("#img_avatar").attr("src", e.target.result);
+                var width = $('#img_avatar').prop('naturalWidth');
+                var height = $('#img_avatar').prop('naturalHeight');
+                // alert(width +":"+height)
+                if (width == 0 || height == 0) {
+                    flagAvatar = false;
+                    $("#register_avatar_error").text("File bạn chọn không phải là ảnh");
+                    $("#img_avatar").removeAttr("src");
+                    $("#bt_choose_ava").val("");
+                    $("#input_avatar").css("display", "none");
+                } else {
+                    $("#register_avatar_error").text("");
+                    $("#input_avatar").css("display", "block");
+                    flagAvatar = true;
+                }
+            };
+            // read the image file as a data URL.
+            reader.readAsDataURL(this.files[0]);
+        }else {
+            flagAvatar = false;
+            $("#register_avatar_error").text("File bạn chọn vượt quá kích thước cho phép (1MB)");
+            $("#img_avatar").removeAttr("src");
+            $("#bt_choose_ava").val("");
+            $("#input_avatar").css("display", "none");
+        }
     });
     loadTotalPrice();
     loadDay();
@@ -800,32 +809,32 @@ function loadJson() {
 
 function validateRegister() {
     flagRegister = true;
-    console.log("empty: "+checkEmpty());
-    if (!checkEmpty()){
+    console.log("empty: " + checkEmpty());
+    if (!checkEmpty()) {
 
         flagRegister = false;
     }
-    console.log("mail:"+validateMail());
+    console.log("mail:" + validateMail());
     if (!validateMail())
         flagRegister = false;
-    console.log("user:"+validateUsername());
+    console.log("user:" + validateUsername());
     if (!validateUsername())
         flagRegister = false;
-    console.log("pass:"+validatePassword());
+    console.log("pass:" + validatePassword());
     if (validatePassword()) {
-        console.log("retype:"+validateRetypePassword());
+        console.log("retype:" + validateRetypePassword());
         if (!validateRetypePassword())
             flagRegister = false;
     } else {
         flagRegister = false;
     }
-    console.log("phone:"+validatePhoneNumber());
+    console.log("phone:" + validatePhoneNumber());
     if (!validatePhoneNumber())
         flagRegister = false;
-    console.log("day:"+validateBirthday($("#day").val(), $("#month").val(), $("#year").val()));
+    console.log("day:" + validateBirthday($("#day").val(), $("#month").val(), $("#year").val()));
     if (!validateBirthday($("#day").val(), $("#month").val(), $("#year").val()))
         flagRegister = false;
-    console.log("ava:"+checkEmptyAvatar());
+    console.log("ava:" + checkEmptyAvatar());
     if (!checkEmptyAvatar())
         flagRegister = false;
     // if (!flagAvatar)
@@ -959,12 +968,12 @@ function validatePhoneNumber() {
     var flagphone = true;
     var phone = $("#input_phone_number");
     var filter = new Array();
-     filter[0] = /^09[0-8]{1}[0-9]{7}$/;
-     filter[1]= /^016[3-9]{1}[0-9]{7}$/;
-     filter[3] = /^012[0-9]{1}[0-9]{6}$/;
-     filter[4] = /^099[3-6]{1}[0-9]{6}$/;
-     filter[2] =/^01(88|99)[0-9]{6}$/;
-    for(var i=0;i<=4;i++){
+    filter[0] = /^09[0-8]{1}[0-9]{7}$/;
+    filter[1] = /^016[3-9]{1}[0-9]{7}$/;
+    filter[3] = /^012[0-9]{1}[0-9]{6}$/;
+    filter[4] = /^099[3-6]{1}[0-9]{6}$/;
+    filter[2] = /^01(88|99)[0-9]{6}$/;
+    for (var i = 0; i <= 4; i++) {
         if (filter[i].test($.trim(phone.val()))) {
             $("#register_phone_error").text("");
             $("#register_phone_true").removeClass("register_validate");
