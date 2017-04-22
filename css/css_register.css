@@ -11,7 +11,13 @@ body{
     margin-top: 100px;
     margin-bottom: 100px;
 }
-#form_register{
+#login{
+    width: 100%;
+    height: 100%;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+.form{
     width: 480px ;
     margin-left: auto;
     margin-right: auto;
@@ -21,7 +27,7 @@ body{
     color: #444;
     font-size: 13px;
 }
-#form_register >div{
+.form >div{
     margin: 15px;
     width: calc(100% - 30px);
     height: calc(100% - 30px);
@@ -67,7 +73,9 @@ body{
     color: #c3293a !important;
     margin-top: 5px;
 }
-
+#login_error{
+     margin-top: 10px;
+ }
 #input_note{
     width: calc(100% - 30px);
     height: 50px;
@@ -104,6 +112,21 @@ body{
     cursor: pointer;
     background-color: #2ab4c4;
 }
+#submit_login{
+    width: 200px;
+    height: 35px;
+    background-color: #59b7c2;
+    border: 0px;
+    border-radius: 2px;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    margin-top: 35px;
+}
+#submit_login:hover{
+    cursor: pointer;
+    background-color: #2ab4c4;
+}
 #field_birthday{
 
 }
@@ -118,4 +141,40 @@ body{
 #register_birthday_error{
     width: 100%;
     color: #c3293a;
+}
+
+#login_suggest{
+    margin-top: 10px;
+    font-size: 13px;
+}
+#field_password >div>u{
+    display: inline-block;
+    width: 30%;
+    margin-left: 20px;
+    /*text-decoration: blink;*/
+}
+#field_password >div>u:hover{
+    cursor: pointer;
+    text-decoration: none;
+}
+#remember_pass{
+    margin-top: 5px;
+    display: inline-block;
+    width: 100%;
+    height: 17px;
+    /*line-height: 17px;*/
+    position: relative;
+}
+#remember_password{
+    width: 17px;
+    height: 17px;
+
+}
+#remember_pass >p{
+    position: absolute;
+    top: 2px;
+    display: inline-block;
+    width: 30%;
+    margin-left: 3px;
+    margin-bottom: 5px;
 }

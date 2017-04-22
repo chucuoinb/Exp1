@@ -41,6 +41,36 @@ $(function () {
     //         validatePhoneNumber();
     //
     // });
+
+    getDataLogin();
+    $("#form_login").submit(function () {
+        if(validateLogin()){
+            submitLogin();
+        }
+        return false;
+    });
+
+    $("#home_login").click(function () {
+        // alert($.trim($("#home_login >a>span").text()));
+        if($.trim($("#home_login >a>span").text()) == "Login"){
+            window.location = "../home/login.php";
+        }
+        else{
+            $.ajax({
+                url : "../php/logout.php",
+                type : "post",
+                dateType:"text",
+                data : {
+                },
+                success : function (result){
+                    $("#home_account").text("My Account");
+                    $(".logged").css("display","block");
+                    $("#home_login >a>span").text("Login");
+                }
+            });
+        }
+    });
+    // $("#submit_login")
     $("#bt_choose_ava").change(function () {
         if (this.files[0].size < 1024 * 1024) {
 
@@ -889,18 +919,19 @@ function validateFullname() {
 }
 function validateMail() {
     var email = $("#input_email").val();
-    // if(checkLengh("email","email")){
-    if ($.trim(email).length > 0) {
-        if (!validateEmail(email)) {
+    // if(checkLengh("email","email")) {
+        if ($.trim(email).length > 0) {
+            if (!validateEmail(email)) {
 
-            $("#register_email_error").text("Email nhập sai");
-            $("#register_email_true").addClass("register_validate");
-            return false;
-        } else {
-            $("#register_email_error").text("");
-            $("#register_email_true").removeClass("register_validate");
-            return true;
-        }
+                $("#register_email_error").text("Email nhập sai");
+                $("#register_email_true").addClass("register_validate");
+                return false;
+            } else {
+                $("#register_email_error").text("");
+                $("#register_email_true").removeClass("register_validate");
+                return true;
+            }
+        // }
     }
     else return false;
 }
@@ -965,7 +996,7 @@ function validateAddress() {
 }
 
 function validatePhoneNumber() {
-    var flagphone = true;
+    // var flagphone = true;
     var phone = $("#input_phone_number");
     var filter = new Array();
     filter[0] = /^09[0-8]{1}[0-9]{7}$/;
@@ -1049,3 +1080,127 @@ function checkImage() {
     var width = $('#hidden_avatar').prop('naturalWidth');
     var height = $('#hidden_avatar').prop('naturalHeight');
 }
+
+function validateEmailLogin() {
+    var email = $("#input_email_login").val();
+    // if(checkLengh("email","email")){
+    if ($.trim(email).length > 0) {
+        if (!validateEmail(email)) {
+
+            $("#login_email_error").text("Email nhập sai");
+            $("#login_email_true").addClass("register_validate");
+            return false;
+        } else {
+            $("#login_email_error").text("");
+            $("#login_email_true").removeClass("register_validate");
+            return true;
+        }
+    }
+    else return false;
+}
+function validatePasswordLogin() {
+    var pass = $("#input_password_login").val();
+    if(pass.length<8 || pass.length>20){
+        $("#login_password_error").text("Mật khẩu từ 8 đến 20 kí tự");
+        if(!$("#login_password_true").hasClass("register_validate"))
+            $("#login_password_true").addClass("register_validate");
+        return false;
+    }else {
+        if (!checkWordSpecil(pass)){
+            $("#login_password_error").text("Mật khẩu không được có kí tự đặc biệt");
+            if(!$("#login_password_true").hasClass("register_validate"))
+                $("#login_password_true").addClass("register_validate");
+            return false;
+        }else {
+            $("#login_password_error").text("");
+            $("#login_password_true").removeClass("register_validate");
+            return true;
+        }
+
+    }
+}
+function validateLogin() {
+    var flagLogin = true;
+    if(!checkEmpty())
+        flagLogin = false;
+    if(!validateEmailLogin())
+        flagLogin = false;
+    if(!validatePasswordLogin())
+        flagLogin = false;
+    return flagLogin;
+}
+function submitLogin() {
+    $.ajax({
+        url : "../php/login.php",
+        type : "post",
+        dateType:"text",
+        data : {
+            use_password : $.trim($('#input_password_login').val()),
+            use_email    : $.trim($('#input_email_login').val())
+        },
+        success : function (result){
+            // $('#result').html(result);
+            alert(result);
+        }
+    });
+}
+function submitLogin() {
+    var email = $.trim($('#input_email_login').val());
+    var password = $.trim($('#input_password_login').val());
+    if ($("#remember_password").prop("checked")){
+        setCookie("email",email,7);
+        setCookie("password",password,7);
+        setCookie("remember","true",7);
+    }
+    else {
+        setCookie("email","",7);
+        setCookie("password","",7);
+        setCookie("remember","",7);
+    }
+    $.ajax({
+        url : "../php/login.php",
+        type : "post",
+        dateType:"text",
+        data : {
+            use_password : password,
+            use_email    : email
+        },
+        success : function (result){
+            // $('#result').html(result);
+            var res = JSON.parse(result);
+            switch (res["code"]){
+                case 200:
+
+                    window.location = "../home";
+                    $("#home_account").text(res["data"]["use_fullname"]);
+                    $("#home_login").css("display","none");
+                    // $("#login_error").text("");
+                    break;
+                case 201:
+                    $("#login_error").text("Nhập sai dữ liệu");
+                    break;
+                case 202:
+                    // $("#input_email_login").val(res["data"]["use_email"]);
+                    $("#login_error").text("Email hoặc mật khẩu không đúng.");
+                    break;
+            }
+        }
+    });
+}
+
+function getDataLogin() {
+    var isRemember = getCookie("remember");
+    if (isRemember){
+        $("#input_email_login").val(getCookie("email"));
+        $("#input_password_login").val(getCookie("password"));
+        $("#remember_password").attr("checked","checked");
+    }
+    else {
+        $("#input_email_login").val("");
+        $("#input_password_login").val("");
+    }
+}
+
+// function home_login() {
+//
+// }

@@ -5,37 +5,38 @@
  * Date: 4/19/2017
  * Time: 1:10 PM
  */
-require_once("const.php");
-require_once("Operation.php");
-$operation = new Operation();
-$avatar = $operation->uploadAvatar();
-if ($avatar) {
-    $operation->resize_image("../uploads/".$avatar,100,100);
-    $operation->resize_image("../uploads/".$avatar,150,150);
-    $username   = $operation->getValue(USERNAME, STRING, "", POST);
-    $fullname   = $operation->getValue(FULLNAME, STRING, "", POST);
-    $email      = $operation->getValue(EMAIL, STRING, "", POST);
-    $birthday   = $operation->getValue(BIRTHDAY, STRING, "", POST);
-    $gender     = $operation->getValue(GENDER, INT, 0, POST);
-    $address    = $operation->getValue(ADDRESS, STRING, "", POST);
-    $phone_number = $operation->getValue(PHONE_NUMBER, STRING, "", POST);
-    $description = $operation->getValue(DESCRIPTION, STRING, "", POST);
-    $password = md5($operation->getValue(PASSWORD, STRING, "", POST));
-//    $list[USERNAME] = $username;
-//    $list[FULLNAME] = $fullname;
-//    $list[EMAIL] = $email;
-//    $list[BIRTHDAY] = $birthday;
-//    $list[GENDER] = $gender;
-//    $list[ADDRESS] = $address;
-//    $list[PASSWORD] = $password;
-//    $list[PHONE_NUMBER] = $phone_number;
-//    $list[DESCRIPTION] = $description;
-    if (!$operation->isExistUsername($username, $email)) {
-        if($operation->storeUser($fullname, $username, $email,
-            $birthday, $gender, $address, $password, $phone_number, $description, $avatar))
-            echo "add success";
-        else echo "add failure";
-    }else
-        echo "username or email exist";
+require_once("../home/config.php");
+include("../function/function.php");
+//$operation = new Operation();
+$username = getValue(USERNAME, STRING, "", POST);
+$fullname = getValue(FULLNAME, STRING, "", POST);
+$email = getValue(EMAIL, STRING, "", POST);
+$birthday = getValue(BIRTHDAY, STRING, "", POST);
+$gender = getValue(GENDER, INT, 0, POST);
+$address = getValue(ADDRESS, STRING, "", POST);
+$phone_number = getValue(PHONE_NUMBER, STRING, "", POST);
+$description = getValue(DESCRIPTION, STRING, "", POST);
+$password = (getValue(PASSWORD, STRING, "", POST));
+if (validateBirthday($birthday) && validatePhone($phone_number)
+    && validateEmail($email) && validateGender($gender)
+    && validateValues($username) && validateValues($password)) {
+    $time_register = new DateTime("now",new DateTimeZone("Asia/Ho_Chi_Minh"));
+    $timestamp = $time_register->getTimestamp();
+    $time_register->format("H:i:s, d/m/Y");
+    $avatar = uploadAvatar($timestamp);
+    if ($avatar) {
+        resize_image("../uploads/" . $avatar, 100, 100);
+        resize_image("../uploads/" . $avatar, 150, 150);
+        if (!isExistUsername($username, $email)) {
+            if (storeUser($fullname, $username, $email,
+                $birthday, $gender, $address, md5($password), $phone_number, $description, $avatar,$time_register->format("H:i:s, d/m/Y")))
+                echo "add success";
+            else echo "add failure";
+        } else
+            echo "username or email exist";
+
+
+    } else
+        echo "upload avatar failure";
 }else
-    echo "upload avatar failure";
+    echo "Dữ liệu lỗi";

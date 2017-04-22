@@ -5,7 +5,7 @@
 <!-- * Time: 1:23 PM-->
 <!-- */-->
 <div id="register">
-    <form id="form_register" method="post" action="../php/storeUser.php" target="_blank" enctype="multipart/form-data">
+    <form class="form" id="form_register" method="post" action="../php/storeUser.php" target="_blank" enctype="multipart/form-data">
         <div>
             <p class="title_register">Register Customers</p>
 

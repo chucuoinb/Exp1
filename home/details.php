@@ -1,8 +1,12 @@
+
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Product</title>
     <link rel="stylesheet" type="text/css" href="../css/css_main.css">
     <link rel="stylesheet" type="text/css" href="../css/css_product_view.css">
     <link rel="stylesheet" type="text/css" href="../css/cloud-zoom.css">

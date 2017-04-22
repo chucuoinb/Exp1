@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>Register</title>
+    <title>Login</title>
     <link rel="stylesheet" type="text/css" href="../css/css_main.css">
     <link rel="stylesheet" type="text/css" href="../css/css_register.css">
     <script src="../js/jquery-3.2.0.js"></script>
@@ -14,7 +15,7 @@
 <div class="wrapper">
     <?php
     include ("../include/inc_header.php");
-    include ("../include/inc_register.php");
+    include ("../include/inc_login.php");
     include ("../include/inc_footer.php");
     ?>
 </div>

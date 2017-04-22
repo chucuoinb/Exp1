@@ -1,8 +1,11 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Home</title>
     <link rel="stylesheet" type="text/css" href="../css/css_main.css">
     <script src="../js/jquery-3.2.0.js"></script>
     <link rel="stylesheet" type="text/css" href="../font-awesome-4.7.0/css/font-awesome.min.css">
@@ -12,6 +15,7 @@
 <body>
 <div class="wrapper">
     <?php
+
     include ("../include/inc_header.php");
     include ("../include/inc_home.php");
     include ("../include/inc_footer.php");

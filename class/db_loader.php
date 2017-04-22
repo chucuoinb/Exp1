@@ -6,8 +6,8 @@
  * Date: 4/19/2017
  * Time: 10:00 PM
  */
-require_once("config.php");
-class loader{
+require_once("../home/config.php");
+class DbLoader{
     private $_connection;
     private static $_instance; //The single instance
     public static function getInstance()
@@ -37,5 +37,11 @@ class loader{
     public function getConnection()
     {
         return $this->_connection;
+    }
+    public function query($sql){
+        return $this->_connection->query($sql);
+    }
+    public function closeConnect(){
+        $this->_connection->close();
     }
 }

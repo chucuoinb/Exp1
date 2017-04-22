@@ -5,14 +5,29 @@
  * Date: 4/20/2017
  * Time: 4:25 PM
  */
-function connect()
+require_once("../home/config.php");
+require_once("../class/db_loader.php");
+//function connect()
+//{
+//    $db = DbLoader::getInstance();
+//    $mysqli = $db->getConnection();
+//    if (!$mysqli) {
+//        die("Connection failed: " . mysqli_connect_error());
+////        return fals
+//    } else {
+//        return $mysqli;
+//    }
+//}
+
+function fnQuery($sql)
 {
-    $db = loader::getInstance();
-    $mysqli = $db->getConnection();
-    if (!$mysqli) {
+    $db = DbLoader::getInstance();
+    if (!$db->getConnection()) {
         die("Connection failed: " . mysqli_connect_error());
+        return false;
     } else {
-        return $mysqli;
+        $res = $db->query($sql);
+        return $res;
     }
 }
 
@@ -26,19 +41,19 @@ function createRandomString($length)
     return $key;
 }
 
-function uploadAvatar()
+function uploadAvatar($time)
 {
     $target_dir = "../uploads/";
     $uploadOk = 1;
     $imageFileType = pathinfo($_FILES["use_avatar"]["name"], PATHINFO_EXTENSION);
-    $name = $this->createRandomString(3) . ((new DateTime())->getTimestamp()).".".$imageFileType;
+    $name = createRandomString(3) . $time . "." . $imageFileType;
     $target_file = $target_dir . basename($name);
 
     if (file_exists($target_file)) {
         echo "Sorry, file already exists.";
         $uploadOk = 0;
     }
-    if ($_FILES["use_avatar"]["size"] > 1024*1024) {
+    if ($_FILES["use_avatar"]["size"] > 1024 * 1024) {
         echo "Sorry, your file is too large.";
         $uploadOk = 0;
     }
@@ -69,7 +84,7 @@ function getInfoUsername()
     $data = array();
     $sql = "SELECT * FROM users
                 ";
-    $mysqli = $this->connect();
+    $mysqli = connect();
     $res = $mysqli->query($sql);
     if ($res) {
         $data = mysqli_fetch_assoc($res);
@@ -111,6 +126,7 @@ function getValue($field, $type, $default, $method)
         case STRING:
             if (is_string($data)) {
 
+//                $values = preg_replace('/\s+/', '', $data);
                 $values = $data;
             }
             break;
@@ -157,8 +173,8 @@ function isExistUsername($username, $email)
 //        $sql = "INSERT INTO users
 //                (use_username,use_email)
 //                  VALUES ('$username','$email')";
-    $mysqli = $this->connect();
-    $res = $mysqli->query($sql);
+//    $mysqli = connect();
+    $res = fnQuery($sql);
 //        echo json_encode($res);
     if (mysqli_num_rows($res) > 0) {
         return true;
@@ -166,40 +182,46 @@ function isExistUsername($username, $email)
         return false;
 }
 
-function storeUser($fullname, $username, $email, $birthday, $gender, $address, $password, $phone_number, $description,$avatar)
+function storeUser($fullname, $username, $email, $birthday, $gender, $address, $password, $phone_number, $description, $avatar,$time_register)
 {
 
-    if (!$this->isExistUsername($username, $email)) {
+    if (!isExistUsername($username, $email)) {
         $sql = "INSERT INTO users
                     (use_fullname,use_username,use_email,use_birthday,
-                    use_gender,use_address,use_password,use_phone_number,use_description,use_avatar)
-                    VALUES (?,?,?,?,?,?,?,?,?,?)";
-//                    VALUES ('".$fullname." ',' ".$username."',
-//                            '".$email."','".$birthday."',
-//                            '".$gender."','".$address."',
-//                            '".$password."','".$phone_number."','".$description."','".$avatar."')";
-        $mysqli = $this->connect();
-        $stmt = $mysqli->prepare($sql);
-        $stmt->bind_param("ssssisssss",$fullname, $username, $email, $birthday, $gender, $address, $password, $phone_number, $description,$avatar);
-        $res = $stmt ->execute();
-        $stmt->close();
+                    use_gender,use_address,use_password,use_phone_number,use_description,use_avatar,use_time_register,use_active)
+                    VALUES ('" . $fullname . " ',' " . $username . "',
+                            '" . $email . "','" . $birthday . "',
+                            '" . $gender . "','" . $address . "',
+                            '" . $password . "','" . $phone_number . "','" . $description . "','" . $avatar . "',
+                            '". $time_register ."','1')";
+//        $mysqli = connect();
+//        $stmt = $mysqli->prepare($sql);
+//        $stmt->bind_param("ssssisssss",$fullname, $username, $email, $birthday, $gender, $address, $password, $phone_number, $description,$avatar);
+//        $res = $stmt ->execute();
+//        $stmt->close();
+        $res = fnQuery($sql);
+//        $mysqli->close();
         if ($res) {
-            $sql = "SELECT * FROM users
-                        WHERE use_username = '" . $username . "'";
-            $res = $mysqli->query($sql);
-            if (mysqli_num_rows($res) > 0)
+            if (isExistUsername($username, $email)) {
                 return true;
-            else return false;
-        } else
+            } else {
+                return false;
+            }
+        } else {
             return false;
-    } else
+        }
+    } else {
         return false;
+    }
 
 }
 
-function resize_image($filename, $new_width, $new_height) {
+
+function resize_image($filename, $new_width, $new_height)
+{
     $image_info = getimagesize($filename);
     $type = $image_info[2];
+    $new_image = imagecreatetruecolor($new_width, $new_height);
     if ($type == IMAGETYPE_JPEG) {
 
         $image = imagecreatefromjpeg($filename);
@@ -207,21 +229,104 @@ function resize_image($filename, $new_width, $new_height) {
 
         $image = imagecreatefromgif($filename);
     } elseif ($type == IMAGETYPE_PNG) {
-
         $image = imagecreatefrompng($filename);
+        $background = imagecolorallocate($new_image, 0, 0, 0);
+        // remove the black
+        imagecolortransparent($new_image, $background);
+        imagealphablending($new_image, false);
+        imagesavealpha($new_image, true);
     }
-    $new_image = imagecreatetruecolor($new_width, $new_height);
     imagecopyresampled($new_image, $image, 0, 0, 0, 0, $new_width, $new_height, imagesx($image), imagesy($image));
-//        $this->image = $new_image;
-    $new_name = substr_replace($filename,"/".$new_width."x".$new_height."/",10,0);
+    if (!file_exists("../uploads/" . $new_width . "x" . $new_height) && !is_dir("../uploads/" . $new_width . "x" . $new_height)) {
+        mkdir("../uploads/" . $new_width . "x" . $new_height);
+    }
+    $new_name = substr_replace($filename, "/" . $new_width . "x" . $new_height, 10, 0);
     if ($type == IMAGETYPE_JPEG) {
-//            $new_name = "";
-        imagejpeg($new_image, $new_name, 100);
+        imagejpeg($new_image, $new_name);
     } elseif ($type == IMAGETYPE_GIF) {
         imagegif($new_image, $new_name);
     } elseif ($type == IMAGETYPE_PNG) {
         imagepng($new_image, $new_name);
     }
 
-    chmod($new_name, 100);
 }
+
+function transparent_background($filename)
+{
+    $new_name = "../uploads/123.png";
+    $img = imagecreatefrompng($filename); //or whatever loading function you need
+    $colors = explode(',', '255,255,255');
+    $remove = imagecolorallocate($img, $colors[0], $colors[1], $colors[2]);
+    imagecolortransparent($img, $remove);
+    imagepng($img, $new_name);
+}
+
+function validateLen($validate)
+{
+    if (strlen($validate) < 8 || strlen($validate) > 20)
+        return false;
+    return true;
+}
+
+function checkWordSpecial($values)
+{
+    $filter = "/^([0-9a-zA-Z | _])+$/";
+    return preg_match($filter, $values);
+}
+
+function validateValues($values)
+{
+    if (validateLen($values)) {
+        if (checkWordSpecial($values))
+            return true;
+        return false;
+    }
+    return false;
+}
+function validateEmail($email){
+    if( filter_var($email,FILTER_VALIDATE_EMAIL))
+        return true;
+    else
+        return false;
+}
+
+function validatePhone($phone){
+    $filter = array();
+    array_push($filter,"/^09[0-8]{1}[0-9]{7}$/");
+    array_push($filter,"/^016[3-9]{1}[0-9]{7}$/");
+    array_push($filter,"/^012[0-9]{1}[0-9]{6}$/");
+    array_push($filter,"/^099[3-6]{1}[0-9]{6}$/");
+    array_push($filter,"/^01(88|99)[0-9]{6}$/");
+    foreach ($filter as $temp) {
+        if (preg_match($temp,$phone)) {
+            return true;
+
+        }
+    }
+        return false;
+}
+function validateBirthday($birthday){
+    $date = explode("/",$birthday);
+    return checkdate($date[1],$date[0],$date[2]);
+}
+function validateGender($gender){
+    if ($gender == GENDER_MALE || $gender == GENDER_FEMALE)
+        return true;
+    return false;
+}
+function login($email,$password){
+    $sql = "SELECT * FROM users
+            WHERE use_email = '".$email."'
+            AND use_password = '".$password."'";
+    $res = fnQuery($sql);
+    if(mysqli_num_rows($res)>0){
+        $values = mysqli_fetch_assoc($res);
+        $list = array();
+        $list[EMAIL] = $values[EMAIL];
+        $list[FULLNAME] = $values[FULLNAME];
+        $list[ID] = $values[ID];
+        return $list;
+    }
+    return false;
+}
+
