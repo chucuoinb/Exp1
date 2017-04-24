@@ -7,9 +7,10 @@
  */
 session_start();
 require_once ("../home/config.php");
-echo $_SESSION[FULLNAME];
-if(isset($_SESSION[FULLNAME]))
-    unset($_SESSION[FULLNAME]);
+setcookie(FULLNAME, "", time()-3600,"/home");
+setcookie("use_save", "", time()-3600,"/home");
 if (isset($_SESSION[ID]))
     unset($_SESSION[ID]);
+if (isset($_SESSION[FULLNAME]))
+    unset($_SESSION[FULLNAME]);
 //echo 1;

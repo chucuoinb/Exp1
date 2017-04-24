@@ -316,8 +316,11 @@ function validateGender($gender){
 }
 function login($email,$password){
     $sql = "SELECT * FROM users
-            WHERE use_email = '".$email."'
-            AND use_password = '".$password."'";
+            WHERE use_password = '".$password."'
+            AND 
+            (use_email = '".$email."'
+            OR use_username = '".$email."')
+            ";
     $res = fnQuery($sql);
     if(mysqli_num_rows($res)>0){
         $values = mysqli_fetch_assoc($res);

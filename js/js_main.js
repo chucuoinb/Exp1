@@ -42,7 +42,7 @@ $(function () {
     //
     // });
 
-    getDataLogin();
+    // getDataLogin();
     $("#form_login").submit(function () {
         if(validateLogin()){
             submitLogin();
@@ -63,9 +63,10 @@ $(function () {
                 data : {
                 },
                 success : function (result){
-                    $("#home_account").text("My Account");
-                    $(".logged").css("display","block");
-                    $("#home_login >a>span").text("Login");
+                    window.location.reload();
+                    // $("#home_account").text("My Account");
+                    // $(".logged").css("display","block");
+                    // $("#home_login >a>span").text("Login");
                 }
             });
         }
@@ -1123,8 +1124,8 @@ function validateLogin() {
     var flagLogin = true;
     if(!checkEmpty())
         flagLogin = false;
-    if(!validateEmailLogin())
-        flagLogin = false;
+    // if(!validateEmailLogin())
+    //     flagLogin = false;
     if(!validatePasswordLogin())
         flagLogin = false;
     return flagLogin;
@@ -1136,7 +1137,7 @@ function submitLogin() {
         dateType:"text",
         data : {
             use_password : $.trim($('#input_password_login').val()),
-            use_email    : $.trim($('#input_email_login').val())
+            use_login    : $.trim($('#input_email_login').val())
         },
         success : function (result){
             // $('#result').html(result);
@@ -1147,23 +1148,15 @@ function submitLogin() {
 function submitLogin() {
     var email = $.trim($('#input_email_login').val());
     var password = $.trim($('#input_password_login').val());
-    if ($("#remember_password").prop("checked")){
-        setCookie("email",email,7);
-        setCookie("password",password,7);
-        setCookie("remember","true",7);
-    }
-    else {
-        setCookie("email","",7);
-        setCookie("password","",7);
-        setCookie("remember","",7);
-    }
+    var use_isSave = $("#remember_password").prop("checked")?1:0;
     $.ajax({
         url : "../php/login.php",
         type : "post",
         dateType:"text",
         data : {
             use_password : password,
-            use_email    : email
+            use_login    : email,
+            use_isSave   :  use_isSave
         },
         success : function (result){
             // $('#result').html(result);
@@ -1190,14 +1183,15 @@ function submitLogin() {
 
 function getDataLogin() {
     var isRemember = getCookie("remember");
-    if (isRemember){
-        $("#input_email_login").val(getCookie("email"));
+    alert(isRemember);
+    if (isRemember == "true"){
+        $("#input_email_login").val(getCookie("login"));
         $("#input_password_login").val(getCookie("password"));
         $("#remember_password").attr("checked","checked");
     }
     else {
         $("#input_email_login").val("");
-        $("#input_password_login").val("");
+        // $("#input_password_login").val("");
     }
 }
 

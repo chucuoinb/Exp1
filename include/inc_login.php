@@ -5,7 +5,7 @@
 <!--// * Time: 11:31 AM-->
 <!--// */-->
 <div id="login">
-    <form id="form_login"   class="form">
+    <form id="form_login"   class="form" target="blank">
         <div>
             <p class="title_register">Login Customers</p>
             <p id="login_suggest">If you have an account with us, please log in.</p>
@@ -32,7 +32,7 @@
                 <span class="register_error_field" id="login_password_error"></span>
             </div>
             <div id="remember_pass">
-                <input type="checkbox" id="remember_password">
+                <input type="checkbox" id="remember_password" checked="checked">
                 <p>Remember password</p>
             </div>
 

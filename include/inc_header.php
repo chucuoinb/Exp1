@@ -1,5 +1,5 @@
 <?php
-    if (isset($_SESSION["use_id"]))
+    if (isset($_COOKIE["use_fullname"]) || isset($_SESSION["use_fullname"]))
         echo '<script type="text/javascript">
                 $(document).ready(function(e) {
                      $(".logged").css("display","none");
@@ -66,6 +66,10 @@
                             <?php
                             require_once ("../function/function.php");
                             require_once ("../home/config.php");
+                            if (isset($_COOKIE["save"])){
+
+                                echo getValue(FULLNAME,STRING,"My Account",COOKIE);
+                            }else
                                 echo getValue(FULLNAME,STRING,"My Account",SESSION);
                             ?>
 <!--                            My Account-->
@@ -80,7 +84,7 @@
                         <span>
                             <?php
                             require_once ("../home/config.php");
-                            echo isset($_SESSION[ID])?"Logout":"Login";
+                            echo (isset($_COOKIE[FULLNAME]) || isset($_SESSION[FULLNAME]))?"Logout":"Login";
                             ?>
                         </span>
                     </a>
@@ -90,7 +94,7 @@
                         |
                     </p>
                 </li>
-                <li class="bef logged" ><a class="mmenu1" href="#home"><span>Sign Up</span></a></li>
+                <li class="bef logged" ><a class="mmenu1" href="../home/register.php"><span>Sign Up</span></a></li>
                 <li id="menu_card">
                     <div id="card">
                         <img src="../images/gio.png">Cart $<span id="total_price">0.00</span></img>
@@ -119,7 +123,7 @@
     <div class="menu">
         <ul>
             <li><a class="mmenu active" href="#home"><span>HOME</span></a></li>
-            <li><a class="mmenu" href="#home">SOLIDS</a></li>
+            <li><a class="mmenu" href="../home/details.php">SOLIDS</a></li>
             <li><a class="mmenu" href="#Liquids">LIQUIDS</a></li>
             <li><a class="mmenu" href="#home">SPRAY</a>
                 <ul class="sub-menu">
@@ -133,15 +137,15 @@
             <li><a class="mmenu" href="#home">FOR CAR</a></li>
             <li><a class="mmenu" href="#home">ALL PAGES</a>
                 <ul class="sub-menu">
-                    <li><a href="#">Home</a></li>
+                    <li><a href="../home">Home</a></li>
                     <li><a href="#">Typography And Basic Styles</a></a></li>
                     <li><a href="#">Catalog (Grid View)</a></li>
                     <li><a href="#">Catalog (List Type View)</a></li>
-                    <li><a href="#">Product View</a></li>
+                    <li><a href="../home/details.php">Product View</a></li>
                     <li><a href="#">Shoping Cart</a></li>
                     <li><a href="#">Procced To Checkout</a></li>
                     <li><a href="#">Products Comparsion</a></li>
-                    <li><a href="#">Login</a></li>
+                    <li><a href="../home/login.php">Login</a></li>
                     <li><a href="#">Contact US</a></li>
                     <li><a href="#">404</a></li>
                     <li><a href="#">Blog Posts</a></li>
