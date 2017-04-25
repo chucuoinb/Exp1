@@ -3,11 +3,11 @@ body {
     font-family: "Segoe UI", Times, Serif;
     font-weight: normal;
     margin: 0;
+
     padding: 0;
-    top: 0;
     box-sizing: border-box !important;
     font-family: Roboto;
-    height: auto;
+    /*height: auto;*/
 }
 .flip_horizontal {
     -moz-transform: scaleX(-1);
@@ -31,9 +31,10 @@ body {
     src: url("../font/roboto/Roboto-Regular.ttf");
 }
 .wrapper {
-    background-color: #FFFFFF;
+    background-color: #f7f7f7;
     width: 100%;
     position: relative;
+    display: inline-block;
 }
 
 .center {
@@ -47,19 +48,19 @@ body {
 
 #admin_left {
     width: 205px;
-    background-color: #f7f7f7;
-    /*margin: 0;*/
-    /*padding: 0;*/
-    float: left;
 
+    display: inline-block;
+    height: 100%;
+    float: left;
 }
 
 #admin_right {
-    width: calc(100% - 206px);
-    /*position: absolute;*/
+    width: calc(100% - 205px);
+    display: inline-block;
+    margin: 0px;
+    /*vertical-align: top;*/
     float: right;
-    /*right: 0px;*/
-    /*top: 0px;*/
+    background-color: #FFFFFF;
 }
 
 #logo_admin {
@@ -70,6 +71,9 @@ body {
     height: 145px;
 
     position: relative;
+}
+#logo_admin:hover{
+    cursor: pointer;
 }
 
 #logo_admin > div {
@@ -205,6 +209,10 @@ body {
     border-right: 0px !important;
     position: relative;
 }
+.header_bt:hover{
+    cursor: pointer;
+    background-color: #f4f4f4;
+}
 .header_bt >div{
     position: absolute;
     top: 2px;
@@ -218,7 +226,7 @@ body {
 #admin_middle{
     margin: 30px 50px 50px 50px;
     width: calc(100% - 100px);
-    height: 24px;
+    height: auto;
     position: relative;
 }
 #admin_middle_dash{
@@ -315,4 +323,148 @@ body {
 }
 #footer_rightnow >span{
     color: #4f83b9 !important;
+}
+#admin_form{
+    width: 100%;
+    margin-top: 25px;
+}
+.input_admin{
+    width: 100%;
+    height: 35px;
+    background-color: #f6f6f6;
+    border: 0px;
+    padding-left: 15px;
+}
+.input_admin::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #7f7f7f;
+}
+.input_admin::-moz-placeholder { /* Firefox 19+ */
+    color: #7f7f7f;
+}
+.input_admin:-ms-input-placeholder { /* IE 10+ */
+    color: #7f7f7f;
+}
+.input_admin:-moz-placeholder { /* Firefox 18- */
+    color: #7f7f7f;
+}
+
+#footer_title{
+    margin-top: 10px;
+    text-align: right;
+    color: #666666;
+    margin-bottom: 5px;
+}
+#footer_title >i{
+    font-size: 16px !important;
+}
+#admin_tag{
+    margin-top: 10px;
+}
+#end_form{
+    margin-top: 20px;
+    padding-bottom: 50px;
+}
+.end_form_left{
+    background-color: #f3f3f3;
+    border: 1px solid #e3e3e3;
+    border-radius: 2px;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    font-size: x-large;
+    color: #666666;
+    float: left;
+    margin-right: 10px;
+}
+.end_form_left:hover{
+    background-color: #dbcbcb;
+    cursor: pointer;
+}
+#end_form_right{
+    background-color: #ed5844;
+    border: 1px solid #e03b25;
+    border-radius: 3px;
+    width: 100px;
+    height: 50px;
+    float: right;
+}
+#end_form_right >p{
+    width: 100%;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+    font-size: 16px;
+    color: white;
+}
+#end_form_right:hover{
+    background-color: #f43b22;
+    cursor: pointer;
+}
+#footer_admin{
+    margin-top: 370px;
+    border-top: 1px solid #ebebeb;
+    height: 50px;
+}
+#footer_admin >div{
+    margin-left: 50px;
+    width: calc(100% - 50px);
+    line-height: 50px;
+    height: 100%;
+}
+.color_footer{
+    color: #0d8cc8;
+    display: inline-block;
+}
+.color_footer >span{
+    margin-left: 15px;
+}
+#admin_account{
+    float: right;
+    width: 30%;
+    border-left: 1px solid #ebebeb;
+    height: 100%;
+    position: relative;
+}
+#admin_account_img{
+    /*margin: 10px;*/
+    /*width: auto;*/
+    width: 200px;
+    height: 30px;
+    position: relative;
+}
+#admin_account_img >img{
+    width: 30px;
+    height: 30px;
+    margin: 10px 0 0 10px;
+}
+#fullname_admin{
+    position: absolute;
+    top: 10px;
+    left: 50px;
+    height: 30px;
+    line-height: 30px;
+    max-width: 150px;
+    display: inline-block;
+    color: #666666;
+}
+.setting_admin{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 100%;
+    line-height: 50px;
+    text-align: center;
+    float: right;
+    display: inline-block;
+    border-left: 1px solid #ebebeb;
+    color: #666666;
+}
+#setting_admin{
+    right: 50px;
+}
+.setting_admin:hover{
+    background-color: #ebebeb;
+    cursor: pointer;
 }
